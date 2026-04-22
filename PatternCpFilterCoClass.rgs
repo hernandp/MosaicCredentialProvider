@@ -1,0 +1,13 @@
+HKCR
+{
+	NoRemove CLSID
+	{
+		ForceRemove {5daab89b-38ac-437e-94f9-2379127f8564} = s 'PatternCredentialProviderFilter class'
+		{
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+		}
+	}
+}

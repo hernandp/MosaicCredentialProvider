@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{339ff35a-cead-40d7-90ab-5b4971ae149a}</UniqueIdentifier>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CredentialFlow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CredentialState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dllmain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternCredProv_i.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternCpCoClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternCpCredentialCoClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternCpFilterCoClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dprintf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnrollmentCrypto.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnrollmentStore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnrollmentTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MosaicPattern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MosaicRender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProductConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProviderRegistration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldDescriptors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VerifyDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsAuth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CredentialFlow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PatternCredProv.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PatternCredProv_i.c">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PatternCpCoClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PatternCpCredentialCoClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PatternCpFilterCoClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnrollmentCrypto.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnrollmentStore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MosaicPattern.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MosaicRender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProviderRegistration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowsAuth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VerifyDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PatternCredProv.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PatternCredProv.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="PatternCredentialProvider.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="cpp.hint" />
+    <None Include="PatternCpCredentialCoClass.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="PatternCpFilterCoClass.rgs">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="PatternCredProv.idl">
+      <Filter>Source Files</Filter>
+    </Midl>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
