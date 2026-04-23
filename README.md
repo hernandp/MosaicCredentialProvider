@@ -15,6 +15,28 @@ It offers the user to enroll to the "Mosaic Credential Provider", which will all
 
 The system also offers a secure mechanism to reset the mosaic pattern to a new one, if the user forgot it.
 
+## Usage flows
+
+### Enrollment
+
+1. When a new user is going to be enrolled, he can click the Mosaic Credential Provider icon in the Logon UI to switch to it. A message inviting the user to start the enrollment process will appear:
+
+   <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/40cb302c-e808-4810-8732-cb062e8adf0a" />
+
+2. Clicking the **Setup** Button will ask the user for its Windows account logon password. 
+
+   <img width="563" height="289" alt="image" src="https://github.com/user-attachments/assets/b8c93e63-76f5-47b0-8baf-0a4885cf4096" />
+
+3. After LSA successfully validates the password as valid, the popup dialog to enter the Mosaic pattern will appear. Here the user can click cells to "draw" its preferred pattern consisting of blank spaces, green squares, blue circles or red crosses.
+
+   <img width="224" height="244" alt="enrollment1" src="https://github.com/user-attachments/assets/bdb6a385-4150-4b81-b05d-f227b85d82bb" />
+
+4. The Credential Provider will request the user to re-enter the  pattern in a second Mosaic dialog to confirm.
+5. When the user enters a matching pattern, the system will report the enrollment as complete:
+
+   <img width="203" height="121" alt="enrollment_complete" src="https://github.com/user-attachments/assets/a737820f-a7c3-47a6-bb0e-9f95d2e1c59e" />
+
+
 ## Requirements and Installation
 
 ---
