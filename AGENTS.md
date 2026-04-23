@@ -1,4 +1,4 @@
-﻿# Mosaic Credential Provider
+# Mosaic Credential Provider
 
 ## Scope
 - This repository contains a Windows Credential Provider implemented with ATL/C++.
@@ -10,8 +10,9 @@
 - Treat this as a Windows-native codebase. Do not introduce cross-platform abstractions unless there is a concrete need.
 
 ## Editing Rules
-- Preserve `CRLF` line endings.
-- Prefer UTF-8 with BOM for source files in this repository so the license header text renders correctly in Visual Studio and PowerShell.
+- Preserve `CRLF` line endings for every text file in this repository.
+- When editing an existing file, normalize the full file back to `CRLF` before finishing. Do not leave mixed line endings in touched files.
+- Use plain `UTF-8` without BOM for repository text files.
 - Keep the MIT license header at the top of every checked-in source file:
   - `*.h`
   - `*.cpp`

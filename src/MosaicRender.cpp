@@ -1,15 +1,15 @@
-﻿// ----------------------------------------------------------------------------------------------------------------
-// Copyright 2026 Hernán Di Pietro
+// ----------------------------------------------------------------------------------------------------------------
+// Copyright 2026 Hernan Di Pietro
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
-// documentation files (the “Software”), to deal in the Software without restriction, including without limitation
+// documentation files (the "Software"), to deal in the Software without restriction, including without limitation
 // the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and
 // to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 //
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of
 // the Software.
 //
-// THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
 // THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
@@ -20,14 +20,14 @@
 
 namespace
 {
-    COLORREF GetGlyphColor(int glyphType)
+    COLORREF GetGlyphColor(MosaicButtonFaceState glyphType)
     {
         switch (glyphType) {
-        case 1:
+        case MOSAIC_BITMAP_CROSS:
             return RGB(255, 0, 0);
-        case 2:
+        case MOSAIC_BITMAP_SQUARE:
             return RGB(0, 160, 0);
-        case 3:
+        case MOSAIC_BITMAP_CIRCLE:
             return RGB(0, 0, 255);
         default:
             return RGB(0, 0, 0);
@@ -35,7 +35,7 @@ namespace
     }
 }
 
-HBITMAP CreateFaceBitmap(int glyphType, int buttonSize)
+HBITMAP CreateFaceBitmap(MosaicButtonFaceState glyphType, int buttonSize)
 {
     const int width = buttonSize - 4;
     const int height = buttonSize - 4;
@@ -70,16 +70,16 @@ HBITMAP CreateFaceBitmap(int glyphType, int buttonSize)
 
     const int margin = 4;
     switch (glyphType) {
-    case 1:
+    case MOSAIC_BITMAP_CROSS:
         MoveToEx(hdcMem, margin, margin, nullptr);
         LineTo(hdcMem, width - margin, height - margin);
         MoveToEx(hdcMem, width - margin, margin, nullptr);
         LineTo(hdcMem, margin, height - margin);
         break;
-    case 2:
+    case MOSAIC_BITMAP_SQUARE:
         Rectangle(hdcMem, margin, margin, width - margin, height - margin);
         break;
-    case 3:
+    case MOSAIC_BITMAP_CIRCLE:
         Ellipse(hdcMem, margin, margin, width - margin, height - margin);
         break;
     default:
