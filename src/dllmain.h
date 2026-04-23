@@ -18,8 +18,8 @@
 // dllmain.h : Declaration of module class.
 #include "PatternCredProv_i.h"
 
-class CPatternCredProvModule : public ATL::CAtlDllModuleT< CPatternCredProvModule > {
+class CMosaicCredProvModule : public ATL::CAtlDllModuleT< CMosaicCredProvModule > {
 };
 
-extern class CPatternCredProvModule _AtlModule;
+extern class CMosaicCredProvModule _AtlModule;
 

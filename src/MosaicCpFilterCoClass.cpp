@@ -15,15 +15,15 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 // ----------------------------------------------------------------------------------------------------------------
-// PatternCpFilterCoClass.cpp : Implementation of CPatternCredentialProviderFilter
+// MosaicCpFilterCoClass.cpp : Implementation of CMosaicCredentialProviderFilter
 
 #include "pch.h"
-#include "PatternCpFilterCoClass.h"
+#include "MosaicCpFilterCoClass.h"
 
 
-// CPatternCredentialProviderFilter
+// CMosaicCredentialProviderFilter
 
-HRESULT __stdcall CPatternCredentialProviderFilter::Filter(
+HRESULT __stdcall CMosaicCredentialProviderFilter::Filter(
     CREDENTIAL_PROVIDER_USAGE_SCENARIO cpus, 
     DWORD dwFlags,
     GUID* rgclsidProviders, 
@@ -33,7 +33,7 @@ HRESULT __stdcall CPatternCredentialProviderFilter::Filter(
     return S_OK;
 }
 
-HRESULT __stdcall CPatternCredentialProviderFilter::UpdateRemoteCredential(
+HRESULT __stdcall CMosaicCredentialProviderFilter::UpdateRemoteCredential(
     const CREDENTIAL_PROVIDER_CREDENTIAL_SERIALIZATION* pcpcsIn,
     CREDENTIAL_PROVIDER_CREDENTIAL_SERIALIZATION* pcpcsOut) 
 {

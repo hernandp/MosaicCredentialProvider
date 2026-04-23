@@ -15,19 +15,27 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 // ----------------------------------------------------------------------------------------------------------------
-// dllmain.cpp : Implementation of DllMain.
+#ifndef DPRINTF_H
+#define DPRINTF_H
+#include <strsafe.h>
+#include <debugapi.h>
+#include <cstdarg>
 
-#include "pch.h"
-#include "framework.h"
-#include "resource.h"
-#include "PatternCredProv_i.h"
-#include "dllmain.h"
-
-CPatternCredProvModule _AtlModule;
-
-// DLL Entry Point
-extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
+inline void dprintfW(const wchar_t* format, ...)
 {
-	hInstance;
-	return _AtlModule.DllMain(dwReason, lpReserved);
+#ifdef DEBUG
+    constexpr size_t DPRINTF_BUFFER_SIZE = 1024;
+    constexpr wchar_t szPrefix[] = L"[MosaicCredProv] ";
+
+    wchar_t buffer[DPRINTF_BUFFER_SIZE] = { 0 };
+    va_list args;
+
+    _ASSERT(SUCCEEDED(StringCchPrintfW(buffer, DPRINTF_BUFFER_SIZE, szPrefix)));
+    va_start(args, format);
+    _ASSERT(SUCCEEDED(StringCchVPrintfW(buffer + wcslen(szPrefix), DPRINTF_BUFFER_SIZE - wcslen(szPrefix), format, args)));
+    OutputDebugStringW(buffer);
+    va_end(args);
+#endif
 }
+
+#endif

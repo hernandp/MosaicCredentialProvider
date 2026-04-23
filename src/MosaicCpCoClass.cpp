@@ -15,11 +15,11 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 // ----------------------------------------------------------------------------------------------------------------
-// PatternCpCoClass.cpp : Implementation of CPatternCredentialProvider
+// MosaicCpCoClass.cpp : Implementation of CMosaicCredentialProvider
 
 #include "pch.h"
-#include "PatternCpCoClass.h"
-#include "PatternCpCredentialCoClass.h"
+#include "MosaicCpCoClass.h"
+#include "MosaicCpCredentialCoClass.h"
 #include "ProductConfig.h"
 #include "dprintf.h"
 #include "FieldDescriptors.h"
@@ -28,7 +28,7 @@
 // ICredentialProvider methods
 
 
-HRESULT __stdcall CPatternCredentialProvider::SetUsageScenario(CREDENTIAL_PROVIDER_USAGE_SCENARIO cpus, DWORD dwFlags)
+HRESULT __stdcall CMosaicCredentialProvider::SetUsageScenario(CREDENTIAL_PROVIDER_USAGE_SCENARIO cpus, DWORD dwFlags)
 {
     // Check if we are enabled.
 
@@ -51,27 +51,27 @@ HRESULT __stdcall CPatternCredentialProvider::SetUsageScenario(CREDENTIAL_PROVID
     return (cpus == CPUS_UNLOCK_WORKSTATION || cpus == CPUS_LOGON) ? S_OK : E_NOTIMPL;
 }
 
-HRESULT __stdcall CPatternCredentialProvider::SetSerialization(const CREDENTIAL_PROVIDER_CREDENTIAL_SERIALIZATION* pcpcs)
+HRESULT __stdcall CMosaicCredentialProvider::SetSerialization(const CREDENTIAL_PROVIDER_CREDENTIAL_SERIALIZATION* pcpcs)
 {
     dprintfW(L"SetSerialization called with pcpcs=%p\n", pcpcs);
     UNREFERENCED_PARAMETER(pcpcs);
     return E_NOTIMPL;
 }
 
-HRESULT __stdcall CPatternCredentialProvider::Advise(ICredentialProviderEvents* pcpe, UINT_PTR upAdviseContext)
+HRESULT __stdcall CMosaicCredentialProvider::Advise(ICredentialProviderEvents* pcpe, UINT_PTR upAdviseContext)
 {
     dprintfW(L"Advise called with pcpe=%p, upAdviseContext=0x%p\n", pcpe, reinterpret_cast<void*>(upAdviseContext));
     
     return S_OK;
 }
 
-HRESULT __stdcall CPatternCredentialProvider::UnAdvise(void)
+HRESULT __stdcall CMosaicCredentialProvider::UnAdvise(void)
 {
     dprintfW(L"UnAdvise called\n");
     return S_OK;
 }
 
-HRESULT __stdcall CPatternCredentialProvider::GetFieldDescriptorCount(DWORD* pdwCount)
+HRESULT __stdcall CMosaicCredentialProvider::GetFieldDescriptorCount(DWORD* pdwCount)
 {
     dprintfW(L"GetFieldDescriptorCount called\n");
 
@@ -79,7 +79,7 @@ HRESULT __stdcall CPatternCredentialProvider::GetFieldDescriptorCount(DWORD* pdw
     return S_OK;
 }
 
-HRESULT __stdcall CPatternCredentialProvider::GetFieldDescriptorAt(DWORD dwIndex, CREDENTIAL_PROVIDER_FIELD_DESCRIPTOR** ppcpfd)
+HRESULT __stdcall CMosaicCredentialProvider::GetFieldDescriptorAt(DWORD dwIndex, CREDENTIAL_PROVIDER_FIELD_DESCRIPTOR** ppcpfd)
 {
     dprintfW(L"GetFieldDescriptorAt called with dwIndex=%d\n", dwIndex);
 
@@ -117,7 +117,7 @@ HRESULT __stdcall CPatternCredentialProvider::GetFieldDescriptorAt(DWORD dwIndex
     return S_OK;
 }
 
-HRESULT __stdcall CPatternCredentialProvider::GetCredentialCount(DWORD* pdwCount, DWORD* pdwDefault, BOOL* pbAutoLogonWithDefault)
+HRESULT __stdcall CMosaicCredentialProvider::GetCredentialCount(DWORD* pdwCount, DWORD* pdwDefault, BOOL* pbAutoLogonWithDefault)
 {
     dprintfW(L"GetCredentialCount called\n");
     *pdwCount = static_cast<DWORD>(m_userSids.size());
@@ -126,7 +126,7 @@ HRESULT __stdcall CPatternCredentialProvider::GetCredentialCount(DWORD* pdwCount
     return S_OK;
 }
 
-HRESULT __stdcall CPatternCredentialProvider::GetCredentialAt(DWORD dwIndex, ICredentialProviderCredential** ppcpc)
+HRESULT __stdcall CMosaicCredentialProvider::GetCredentialAt(DWORD dwIndex, ICredentialProviderCredential** ppcpc)
 {
     HRESULT hr{ S_OK };
     dprintfW(L"GetCredentialAt called with dwIndex=%d\n", dwIndex);
@@ -140,8 +140,8 @@ HRESULT __stdcall CPatternCredentialProvider::GetCredentialAt(DWORD dwIndex, ICr
 
     if (!m_pCredentials[dwIndex]) {
         // lazy init 
-        CComObject<CPatternCredentialProviderCredential>* pCredential = nullptr;
-        if (SUCCEEDED(hr = CComObject<CPatternCredentialProviderCredential>::CreateInstance(&pCredential))) {
+        CComObject<CMosaicCredentialProviderCredential>* pCredential = nullptr;
+        if (SUCCEEDED(hr = CComObject<CMosaicCredentialProviderCredential>::CreateInstance(&pCredential))) {
             pCredential->AddRef(); // AddRef because CComObject<T>::CreateInstance returns refcount 0!
             if (!m_userSids.empty()) {
                 pCredential->SetUserData(m_userSids[dwIndex]);
@@ -161,7 +161,7 @@ HRESULT __stdcall CPatternCredentialProvider::GetCredentialAt(DWORD dwIndex, ICr
     return hr;
 }
 
-HRESULT __stdcall CPatternCredentialProvider::SetUserArray(ICredentialProviderUserArray *users) 
+HRESULT __stdcall CMosaicCredentialProvider::SetUserArray(ICredentialProviderUserArray *users) 
 {
     dprintfW(L"SetUserArray called with users=%p\n", users);
 

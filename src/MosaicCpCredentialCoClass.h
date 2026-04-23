@@ -15,7 +15,7 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 // ----------------------------------------------------------------------------------------------------------------
-// PatternCpCredentialCoClass.h : Declaration of the CPatternCredentialProviderCredential
+// MosaicCpCredentialCoClass.h : Declaration of the CMosaicCredentialProviderCredential
 
 #pragma once
 #include "resource.h"       // main symbols
@@ -29,23 +29,23 @@
 using namespace ATL;
 #include <string>
 
-// CPatternCredentialProviderCredential
+// CMosaicCredentialProviderCredential
 
-class ATL_NO_VTABLE CPatternCredentialProviderCredential :
+class ATL_NO_VTABLE CMosaicCredentialProviderCredential :
     public CComObjectRootEx<CComSingleThreadModel>,
     public ICredentialProviderCredential2
 {
 public:
-    CPatternCredentialProviderCredential() : m_hwndParent(nullptr), 
+    CMosaicCredentialProviderCredential() : m_hwndParent(nullptr), 
         m_pEvents(nullptr), 
         m_userSid(L""),
         m_cpState(CredentialProviderState::CPSTATE_INITIAL)
     {
     }
 
-    DECLARE_REGISTRY_RESOURCEID(IDR_PATTERNCREDENTIALPROVIDER);
+    DECLARE_REGISTRY_RESOURCEID(IDR_MOSAICCREDENTIALPROVIDER);
 
-    BEGIN_COM_MAP(CPatternCredentialProviderCredential)
+    BEGIN_COM_MAP(CMosaicCredentialProviderCredential)
         COM_INTERFACE_ENTRY(ICredentialProviderCredential2)
     END_COM_MAP()
 

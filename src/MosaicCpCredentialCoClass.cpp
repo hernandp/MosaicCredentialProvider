@@ -16,7 +16,7 @@
 // SOFTWARE.
 // ----------------------------------------------------------------------------------------------------------------
 #include "pch.h"
-#include "PatternCpCredentialCoClass.h"
+#include "MosaicCpCredentialCoClass.h"
 #include "CredentialFlow.h"
 #include "EnrollmentCrypto.h"
 #include "EnrollmentStore.h"
@@ -28,7 +28,7 @@
 
 #include <vector>
 
-HRESULT CPatternCredentialProviderCredential::CaptureEnrollmentPattern(LPCWSTR pszTitle, LPCWSTR pszPrompt, std::wstring& patternOut)
+HRESULT CMosaicCredentialProviderCredential::CaptureEnrollmentPattern(LPCWSTR pszTitle, LPCWSTR pszPrompt, std::wstring& patternOut)
 {
     MosaicPatternResult result;
     const HRESULT hr = OpenVerifyDialog(m_hwndParent, m_userSid.c_str(), pszTitle, pszPrompt, result);
@@ -38,7 +38,7 @@ HRESULT CPatternCredentialProviderCredential::CaptureEnrollmentPattern(LPCWSTR p
     return hr;
 }
 
-void CPatternCredentialProviderCredential::ResetPasswordCollectionState(CredentialProviderState passwordState)
+void CMosaicCredentialProviderCredential::ResetPasswordCollectionState(CredentialProviderState passwordState)
 {
     SecureClearString(m_enrollmentPassword);
     SecureClearString(m_firstEnrollmentPattern);
@@ -62,7 +62,7 @@ void CPatternCredentialProviderCredential::ResetPasswordCollectionState(Credenti
 // - Persist the protected blob to the per-user enrollment store.
 // - If everything succeeds, switch the credential back to the ready-for-login state.
 //
-HRESULT CPatternCredentialProviderCredential::RunPatternProvisioningFlow(
+HRESULT CMosaicCredentialProviderCredential::RunPatternProvisioningFlow(
     CredentialProviderState firstPatternState,
     CredentialProviderState confirmPatternState,
     LPCWSTR passwordPrompt,
@@ -165,7 +165,7 @@ HRESULT CPatternCredentialProviderCredential::RunPatternProvisioningFlow(
     return S_OK;
 }
 
-HRESULT CPatternCredentialProviderCredential::RunEnrollmentSetup()
+HRESULT CMosaicCredentialProviderCredential::RunEnrollmentSetup()
 {
     return RunPatternProvisioningFlow(
         CredentialProviderState::CPSTATE_ENROLLMENT_PATTERN_FIRST,
@@ -177,7 +177,7 @@ HRESULT CPatternCredentialProviderCredential::RunEnrollmentSetup()
         L"Enrollment completed successfully.");
 }
 
-HRESULT CPatternCredentialProviderCredential::RunResetMosaic()
+HRESULT CMosaicCredentialProviderCredential::RunResetMosaic()
 {
     return RunPatternProvisioningFlow(
         CredentialProviderState::CPSTATE_RESET_PATTERN_FIRST,
@@ -189,7 +189,7 @@ HRESULT CPatternCredentialProviderCredential::RunResetMosaic()
         L"Your mosaic pattern was updated successfully.");
 }
 
-void CPatternCredentialProviderCredential::SetUserData(const std::wstring& userSid)
+void CMosaicCredentialProviderCredential::SetUserData(const std::wstring& userSid)
 {
     m_userSid = userSid;
     SecureClearString(m_enrollmentPassword);
@@ -202,7 +202,7 @@ void CPatternCredentialProviderCredential::SetUserData(const std::wstring& userS
         : CredentialProviderState::CPSTATE_INITIAL;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::Advise(ICredentialProviderCredentialEvents* pcpce)
+HRESULT __stdcall CMosaicCredentialProviderCredential::Advise(ICredentialProviderCredentialEvents* pcpce)
 {
     dprintfW(L"Advise called with pcpce=%p\n", pcpce);
 
@@ -218,7 +218,7 @@ HRESULT __stdcall CPatternCredentialProviderCredential::Advise(ICredentialProvid
     return hr;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::UnAdvise(void)
+HRESULT __stdcall CMosaicCredentialProviderCredential::UnAdvise(void)
 {
     dprintfW(L"UnAdvise called\n");
 
@@ -228,7 +228,7 @@ HRESULT __stdcall CPatternCredentialProviderCredential::UnAdvise(void)
     return S_OK;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::SetSelected(BOOL* pbAutoLogon)
+HRESULT __stdcall CMosaicCredentialProviderCredential::SetSelected(BOOL* pbAutoLogon)
 {
     dprintfW(L"SetSelected called with pbAutoLogon=%p\n", pbAutoLogon);
     if (pbAutoLogon != nullptr) {
@@ -237,13 +237,13 @@ HRESULT __stdcall CPatternCredentialProviderCredential::SetSelected(BOOL* pbAuto
     return S_OK;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::SetDeselected(void)
+HRESULT __stdcall CMosaicCredentialProviderCredential::SetDeselected(void)
 {
     dprintfW(L"SetDeselected called\n");
     return S_OK;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::GetFieldState(
+HRESULT __stdcall CMosaicCredentialProviderCredential::GetFieldState(
     DWORD dwFieldID,
     CREDENTIAL_PROVIDER_FIELD_STATE* pcpfs,
     CREDENTIAL_PROVIDER_FIELD_INTERACTIVE_STATE* pcpfis)
@@ -260,7 +260,7 @@ HRESULT __stdcall CPatternCredentialProviderCredential::GetFieldState(
     return InternalGetFieldState(dwFieldID, m_cpState, isEnrolled, enrollmentInfo.dwEnabled, pcpfs, pcpfis);
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::GetStringValue(DWORD dwFieldID, LPWSTR* ppsz)
+HRESULT __stdcall CMosaicCredentialProviderCredential::GetStringValue(DWORD dwFieldID, LPWSTR* ppsz)
 {
     dprintfW(L"GetStringValue called with dwFieldID=%d\n", dwFieldID);
 
@@ -292,7 +292,7 @@ HRESULT __stdcall CPatternCredentialProviderCredential::GetStringValue(DWORD dwF
     }
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::GetBitmapValue(DWORD dwFieldID, HBITMAP* phbmp)
+HRESULT __stdcall CMosaicCredentialProviderCredential::GetBitmapValue(DWORD dwFieldID, HBITMAP* phbmp)
 {
     dprintfW(L"GetBitmapValue called with dwFieldID=%d\n", dwFieldID);
 
@@ -314,13 +314,13 @@ HRESULT __stdcall CPatternCredentialProviderCredential::GetBitmapValue(DWORD dwF
     return S_OK;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::GetCheckboxValue(DWORD dwFieldID, BOOL* pbChecked, LPWSTR* ppszLabel)
+HRESULT __stdcall CMosaicCredentialProviderCredential::GetCheckboxValue(DWORD dwFieldID, BOOL* pbChecked, LPWSTR* ppszLabel)
 {
     dprintfW(L"GetCheckboxValue called with dwFieldID=%d\n", dwFieldID);
     return E_NOTIMPL;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::GetSubmitButtonValue(DWORD dwFieldID, DWORD* pdwAdjacentTo)
+HRESULT __stdcall CMosaicCredentialProviderCredential::GetSubmitButtonValue(DWORD dwFieldID, DWORD* pdwAdjacentTo)
 {
     dprintfW(L"GetSubmitButtonValue called with dwFieldID=%d\n", dwFieldID);
 
@@ -336,19 +336,19 @@ HRESULT __stdcall CPatternCredentialProviderCredential::GetSubmitButtonValue(DWO
     return E_NOTIMPL;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::GetComboBoxValueCount(DWORD dwFieldID, DWORD* pcItems, DWORD* pdwSelectedItem)
+HRESULT __stdcall CMosaicCredentialProviderCredential::GetComboBoxValueCount(DWORD dwFieldID, DWORD* pcItems, DWORD* pdwSelectedItem)
 {
     dprintfW(L"GetComboBoxValueCount called with dwFieldID=%d\n", dwFieldID);
     return E_NOTIMPL;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::GetComboBoxValueAt(DWORD dwFieldID, DWORD dwItem, LPWSTR* ppszItem)
+HRESULT __stdcall CMosaicCredentialProviderCredential::GetComboBoxValueAt(DWORD dwFieldID, DWORD dwItem, LPWSTR* ppszItem)
 {
     dprintfW(L"GetComboBoxValueAt called with dwFieldID=%d, dwItem=%d\n", dwFieldID, dwItem);
     return E_NOTIMPL;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::SetStringValue(DWORD dwFieldID, LPCWSTR psz)
+HRESULT __stdcall CMosaicCredentialProviderCredential::SetStringValue(DWORD dwFieldID, LPCWSTR psz)
 {
     dprintfW(L"SetStringValue called with dwFieldID=%d\n", dwFieldID);
 
@@ -361,19 +361,19 @@ HRESULT __stdcall CPatternCredentialProviderCredential::SetStringValue(DWORD dwF
     return S_OK;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::SetCheckboxValue(DWORD dwFieldID, BOOL bChecked)
+HRESULT __stdcall CMosaicCredentialProviderCredential::SetCheckboxValue(DWORD dwFieldID, BOOL bChecked)
 {
     dprintfW(L"SetCheckboxValue called with dwFieldID=%d, bChecked=%d\n", dwFieldID, bChecked);
     return E_NOTIMPL;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::SetComboBoxSelectedValue(DWORD dwFieldID, DWORD dwSelectedItem)
+HRESULT __stdcall CMosaicCredentialProviderCredential::SetComboBoxSelectedValue(DWORD dwFieldID, DWORD dwSelectedItem)
 {
     dprintfW(L"SetComboBoxSelectedValue called with dwFieldID=%d, dwSelectedItem=%d\n", dwFieldID, dwSelectedItem);
     return E_NOTIMPL;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::CommandLinkClicked(DWORD dwFieldID)
+HRESULT __stdcall CMosaicCredentialProviderCredential::CommandLinkClicked(DWORD dwFieldID)
 {
     dprintfW(L"CommandLinkClicked called with dwFieldID=%d\n", dwFieldID);
 
@@ -407,7 +407,7 @@ HRESULT __stdcall CPatternCredentialProviderCredential::CommandLinkClicked(DWORD
     return E_NOTIMPL;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::GetSerialization(
+HRESULT __stdcall CMosaicCredentialProviderCredential::GetSerialization(
     CREDENTIAL_PROVIDER_GET_SERIALIZATION_RESPONSE* pcpgsr,
     CREDENTIAL_PROVIDER_CREDENTIAL_SERIALIZATION* pcpcs,
     LPWSTR* ppszOptionalStatusText,
@@ -470,7 +470,7 @@ HRESULT __stdcall CPatternCredentialProviderCredential::GetSerialization(
     return E_NOTIMPL;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::ReportResult(
+HRESULT __stdcall CMosaicCredentialProviderCredential::ReportResult(
     NTSTATUS ntsStatus,
     NTSTATUS ntsSubstatus,
     LPWSTR* ppszOptionalStatusText,
@@ -480,7 +480,7 @@ HRESULT __stdcall CPatternCredentialProviderCredential::ReportResult(
     return S_OK;
 }
 
-HRESULT __stdcall CPatternCredentialProviderCredential::GetUserSid(LPWSTR* sid)
+HRESULT __stdcall CMosaicCredentialProviderCredential::GetUserSid(LPWSTR* sid)
 {
     dprintfW(L"GetUserSid called\n");
 

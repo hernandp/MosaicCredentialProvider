@@ -15,24 +15,19 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 // ----------------------------------------------------------------------------------------------------------------
-//{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by PatternCredProv.rc
-//
-#define IDD_VERIFY_DIALOG               9
-#define IDS_PROJNAME                    100
-#define IDR_PATTERNCREDENTIALPROVIDER   106
-#define IDR_PATTERNCPCREDENTIALCOCLASS  107
-#define IDR_PATTERNCPFILTERCOCLASS      108
-#define IDB_BITMAP1                     203
+// dllmain.cpp : Implementation of DllMain.
 
-// Next default values for new objects
-// 
-#ifdef APSTUDIO_INVOKED
-#ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        204
-#define _APS_NEXT_COMMAND_VALUE         32768
-#define _APS_NEXT_CONTROL_VALUE         201
-#define _APS_NEXT_SYMED_VALUE           109
-#endif
-#endif
+#include "pch.h"
+#include "framework.h"
+#include "resource.h"
+#include "PatternCredProv_i.h"
+#include "dllmain.h"
+
+CMosaicCredProvModule _AtlModule;
+
+// DLL Entry Point
+extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
+{
+	hInstance;
+	return _AtlModule.DllMain(dwReason, lpReserved);
+}

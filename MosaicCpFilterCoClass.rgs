@@ -1,8 +1,8 @@
-HKCR
+﻿HKCR
 {
 	NoRemove CLSID
 	{
-		ForceRemove {30106E01-B65F-480E-993E-92D5D7310C5E} = s 'PatternCredentialProvider class'
+		ForceRemove {5daab89b-38ac-437e-94f9-2379127f8564} = s 'MosaicCredentialProviderFilter class'
 		{
 			InprocServer32 = s '%MODULE%'
 			{

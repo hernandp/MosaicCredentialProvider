@@ -3,12 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36811.4 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PatternCredProv", "PatternCredProv.vcxproj", "{CAABB8C4-D162-B703-7A7D-59D140A1994A}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PatternCredProvPS", "PatternCredProvPS\PatternCredProvPS.vcxproj", "{BF63DDB8-3954-D692-1CB5-F67287770461}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CAABB8C4-D162-B703-7A7D-59D140A1994A} = {CAABB8C4-D162-B703-7A7D-59D140A1994A}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MosaicCredProv", "MosaicCredProv.vcxproj", "{CAABB8C4-D162-B703-7A7D-59D140A1994A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +21,6 @@ Global
 		{CAABB8C4-D162-B703-7A7D-59D140A1994A}.Release|x64.Build.0 = Release|x64
 		{CAABB8C4-D162-B703-7A7D-59D140A1994A}.Release|x86.ActiveCfg = Release|Win32
 		{CAABB8C4-D162-B703-7A7D-59D140A1994A}.Release|x86.Build.0 = Release|Win32
-		{BF63DDB8-3954-D692-1CB5-F67287770461}.Debug|x64.ActiveCfg = Debug|x64
-		{BF63DDB8-3954-D692-1CB5-F67287770461}.Debug|x86.ActiveCfg = Debug|Win32
-		{BF63DDB8-3954-D692-1CB5-F67287770461}.Release|x64.ActiveCfg = Release|x64
-		{BF63DDB8-3954-D692-1CB5-F67287770461}.Release|x86.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

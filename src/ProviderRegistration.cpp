@@ -44,7 +44,7 @@ HRESULT RegisterCredentialProviderFilter() {
 		return HRESULT_FROM_WIN32(ls);
 	}
 	CoTaskMemFree(szClsId);
-	ls = hklmCredProvFilter.SetStringValue(nullptr, L"Pattern Credential Provider Filter");
+	ls = hklmCredProvFilter.SetStringValue(nullptr, L"Mosaic Credential Provider Filter");
 	if (ls != ERROR_SUCCESS) {
 		dprintfW(L"Failed to create Credential Provider Filter default value, LSTATUS = 0x%08x\n", ls);
 		return HRESULT_FROM_WIN32(ls);
@@ -76,7 +76,7 @@ HRESULT RegisterCredentialProvider()
 	}
 	CoTaskMemFree(szClsId);
 
-	ls = hklmCredProv.SetStringValue(nullptr, L"Pattern Credential Provider");
+	ls = hklmCredProv.SetStringValue(nullptr, L"Mosaic Credential Provider");
 	if (ls != ERROR_SUCCESS) {
 		dprintfW(L"Failed to create Credential Provider default value, LSTATUS = 0x%08x\n", ls);
 		return HRESULT_FROM_WIN32(ls);

@@ -15,7 +15,7 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 // ----------------------------------------------------------------------------------------------------------------
-// PatternCpCoClass.h : Declaration of the CPatternCredentialProvider
+// MosaicCpFilterCoClass.h : Declaration of the CMosaicCredentialProviderFilter
 
 #pragma once
 #include "resource.h"       // main symbols
@@ -24,68 +24,53 @@
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
 #error "Single-threaded COM objects are not properly supported on Windows CE platform, such as the Windows Mobile platforms that do not include full DCOM support. Define _CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA to force ATL to support creating single-thread COM object's and allow use of it's single-threaded COM object implementations. The threading model in your rgs file was set to 'Free' as that is the only threading model supported in non DCOM Windows CE platforms."
 #endif
-#include <vector>
-#include <string>
 
 using namespace ATL;
 
-// CPatternCredentialProvider
+// CMosaicCredentialProviderFilter
 
-class ATL_NO_VTABLE CPatternCredentialProvider :
-    public CComObjectRootEx<CComSingleThreadModel>,
-    public CComCoClass<CPatternCredentialProvider, &CLSID_PatternCredentialProvider>,
-    public ICredentialProvider,    
-    public ICredentialProviderSetUserArray
+class ATL_NO_VTABLE CMosaicCredentialProviderFilter :
+	public CComObjectRootEx<CComSingleThreadModel>,
+	public CComCoClass<CMosaicCredentialProviderFilter, &CLSID_PatternCredentialProviderFilter>,
+	public ICredentialProviderFilter
 {
 public:
-    CPatternCredentialProvider()
-    {
-    }
+	CMosaicCredentialProviderFilter()
+	{
+	}
 
-    DECLARE_REGISTRY_RESOURCEID(IDR_PATTERNCREDENTIALPROVIDER)
+DECLARE_REGISTRY_RESOURCEID(IDR_MOSAICCPFILTERCOCLASS);
 
-    BEGIN_COM_MAP(CPatternCredentialProvider)
-        COM_INTERFACE_ENTRY(ICredentialProvider)
-        COM_INTERFACE_ENTRY(ICredentialProviderSetUserArray)
-    END_COM_MAP()
+BEGIN_COM_MAP(CMosaicCredentialProviderFilter)
+	COM_INTERFACE_ENTRY(ICredentialProviderFilter)
+END_COM_MAP()
 
-    DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-    HRESULT FinalConstruct()
-    {
-        return S_OK;
-    }
 
-    void FinalRelease()
-    {
-    }
+	DECLARE_PROTECT_FINAL_CONSTRUCT()
+
+	HRESULT FinalConstruct()
+	{
+		return S_OK;
+	}
+
+	void FinalRelease()
+	{
+	}
 
 public:
 
-    // Inherited via ICredentialProvider
-    HRESULT __stdcall SetUsageScenario(CREDENTIAL_PROVIDER_USAGE_SCENARIO cpus, DWORD dwFlags) override;
 
-    HRESULT __stdcall SetSerialization(const CREDENTIAL_PROVIDER_CREDENTIAL_SERIALIZATION* pcpcs) override;
 
-    HRESULT __stdcall Advise(ICredentialProviderEvents* pcpe, UINT_PTR upAdviseContext) override;
 
-    HRESULT __stdcall UnAdvise(void) override;
-
-    HRESULT __stdcall GetFieldDescriptorCount(DWORD* pdwCount) override;
-
-    HRESULT __stdcall GetFieldDescriptorAt(DWORD dwIndex, CREDENTIAL_PROVIDER_FIELD_DESCRIPTOR** ppcpfd) override;
-
-    HRESULT __stdcall GetCredentialCount(DWORD* pdwCount, DWORD* pdwDefault, BOOL* pbAutoLogonWithDefault) override;
-
-    HRESULT __stdcall GetCredentialAt(DWORD dwIndex, ICredentialProviderCredential** ppcpc) override;
-
-    // Inherited via ICredentialProviderSetUserArray
-    HRESULT __stdcall SetUserArray(
-        ICredentialProviderUserArray *users) override;
-
-private:
-    std::vector<std::wstring>                               m_userSids;
-    std::vector<CComPtr<ICredentialProviderCredential2>>    m_pCredentials;
+// Inherited via ICredentialProviderFilter
+  HRESULT __stdcall Filter(CREDENTIAL_PROVIDER_USAGE_SCENARIO cpus,
+                           DWORD dwFlags, GUID *rgclsidProviders,
+                           BOOL *rgbAllow, DWORD cProviders) override;
+  HRESULT __stdcall UpdateRemoteCredential(
+      const CREDENTIAL_PROVIDER_CREDENTIAL_SERIALIZATION *pcpcsIn,
+      CREDENTIAL_PROVIDER_CREDENTIAL_SERIALIZATION *pcpcsOut) override;
 };
 
-OBJECT_ENTRY_AUTO(__uuidof(PatternCredentialProvider), CPatternCredentialProvider)
+OBJECT_ENTRY_AUTO(__uuidof(PatternCredentialProviderFilter), CMosaicCredentialProviderFilter)
+

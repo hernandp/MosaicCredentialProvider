@@ -19,137 +19,137 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CredentialFlow.h">
+    <ClInclude Include="src/CredentialFlow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CredentialState.h">
+    <ClInclude Include="src/CredentialState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework.h">
+    <ClInclude Include="src/framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
+    <ClInclude Include="src/targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
+    <ClInclude Include="src/Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dllmain.h">
+    <ClInclude Include="src/dllmain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PatternCredProv_i.h">
+    <ClInclude Include="src/PatternCredProv_i.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="src/pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PatternCpCoClass.h">
+    <ClInclude Include="src/MosaicCpCoClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PatternCpCredentialCoClass.h">
+    <ClInclude Include="src/MosaicCpCredentialCoClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PatternCpFilterCoClass.h">
+    <ClInclude Include="src/MosaicCpFilterCoClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dprintf.h">
+    <ClInclude Include="src/dprintf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnrollmentCrypto.h">
+    <ClInclude Include="src/EnrollmentCrypto.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnrollmentStore.h">
+    <ClInclude Include="src/EnrollmentStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnrollmentTypes.h">
+    <ClInclude Include="src/EnrollmentTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MosaicPattern.h">
+    <ClInclude Include="src/MosaicPattern.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MosaicRender.h">
+    <ClInclude Include="src/MosaicRender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProductConfig.h">
+    <ClInclude Include="src/ProductConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProviderRegistration.h">
+    <ClInclude Include="src/ProviderRegistration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FieldDescriptors.h">
+    <ClInclude Include="src/FieldDescriptors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VerifyDialog.h">
+    <ClInclude Include="src/VerifyDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WindowsAuth.h">
+    <ClInclude Include="src/WindowsAuth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CredentialFlow.cpp">
+    <ClCompile Include="src/CredentialFlow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PatternCredProv.cpp">
+    <ClCompile Include="src/MosaicCredProv.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dllmain.cpp">
+    <ClCompile Include="src/dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PatternCredProv_i.c">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="src/pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PatternCpCoClass.cpp">
+    <ClCompile Include="src/MosaicCpCoClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PatternCpCredentialCoClass.cpp">
+    <ClCompile Include="src/MosaicCpCredentialCoClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PatternCpFilterCoClass.cpp">
+    <ClCompile Include="src/MosaicCpFilterCoClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EnrollmentCrypto.cpp">
+    <ClCompile Include="src/EnrollmentCrypto.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EnrollmentStore.cpp">
+    <ClCompile Include="src/EnrollmentStore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MosaicPattern.cpp">
+    <ClCompile Include="src/MosaicPattern.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MosaicRender.cpp">
+    <ClCompile Include="src/MosaicRender.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProviderRegistration.cpp">
+    <ClCompile Include="src/ProviderRegistration.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WindowsAuth.cpp">
+    <ClCompile Include="src/WindowsAuth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VerifyDialog.cpp">
+    <ClCompile Include="src/VerifyDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="PatternCredProv.rc">
+    <ResourceCompile Include="res/MosaicCredProv.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="PatternCredProv.def">
+    <None Include="MosaicCredProv.def">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="PatternCredentialProvider.rgs">
+    <None Include="MosaicCredentialProvider.rgs">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="cpp.hint" />
-    <None Include="PatternCpCredentialCoClass.rgs">
+    <None Include="MosaicCpCredentialCoClass.rgs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="PatternCpFilterCoClass.rgs">
+    <None Include="MosaicCpFilterCoClass.rgs">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -159,8 +159,9 @@
     </Midl>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="bitmap1.bmp">
+    <Image Include="res/bitmap1.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
 </Project>
+

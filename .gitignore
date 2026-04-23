@@ -1,12 +1,10 @@
-.vs/
+﻿.vs/
 *.aps
 *.user
 *.VC.db
 *.VC.opendb
 
-x64/
-PatternCredProv/x64/
-PatternCredProvPS/DebugPS/
+build/
 
 *.obj
 *.ipdb

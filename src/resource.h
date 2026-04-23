@@ -15,27 +15,24 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 // ----------------------------------------------------------------------------------------------------------------
-#ifndef DPRINTF_H
-#define DPRINTF_H
-#include <strsafe.h>
-#include <debugapi.h>
-#include <cstdarg>
+//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ generated include file.
+// Used by MosaicCredProv.rc
+//
+#define IDD_VERIFY_DIALOG               9
+#define IDS_PROJNAME                    100
+#define IDR_MOSAICCREDENTIALPROVIDER   106
+#define IDR_MOSAICCPCREDENTIALCOCLASS  107
+#define IDR_MOSAICCPFILTERCOCLASS      108
+#define IDB_BITMAP1                     203
 
-inline void dprintfW(const wchar_t* format, ...)
-{
-#ifdef DEBUG
-    constexpr size_t DPRINTF_BUFFER_SIZE = 1024;
-    constexpr wchar_t szPrefix[] = L"[PatternCredProv] ";
-
-    wchar_t buffer[DPRINTF_BUFFER_SIZE] = { 0 };
-    va_list args;
-
-    _ASSERT(SUCCEEDED(StringCchPrintfW(buffer, DPRINTF_BUFFER_SIZE, szPrefix)));
-    va_start(args, format);
-    _ASSERT(SUCCEEDED(StringCchVPrintfW(buffer + wcslen(szPrefix), DPRINTF_BUFFER_SIZE - wcslen(szPrefix), format, args)));
-    OutputDebugStringW(buffer);
-    va_end(args);
+// Next default values for new objects
+// 
+#ifdef APSTUDIO_INVOKED
+#ifndef APSTUDIO_READONLY_SYMBOLS
+#define _APS_NEXT_RESOURCE_VALUE        204
+#define _APS_NEXT_COMMAND_VALUE         32768
+#define _APS_NEXT_CONTROL_VALUE         201
+#define _APS_NEXT_SYMED_VALUE           109
 #endif
-}
-
 #endif

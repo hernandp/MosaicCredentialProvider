@@ -67,24 +67,36 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <BaseOutputRoot>$(ProjectDir)build\</BaseOutputRoot>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(BaseOutputRoot)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(BaseOutputRoot)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(BaseOutputRoot)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(BaseOutputRoot)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(BaseOutputRoot)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(BaseOutputRoot)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(BaseOutputRoot)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(BaseOutputRoot)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
@@ -98,7 +110,7 @@
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <HeaderFileName>PatternCredProv_i.h</HeaderFileName>
+      <HeaderFileName>src\PatternCredProv_i.h</HeaderFileName>
       <InterfaceIdentifierFileName>PatternCredProv_i.c</InterfaceIdentifierFileName>
       <ProxyFileName>PatternCredProv_p.c</ProxyFileName>
       <GenerateStublessProxies>true</GenerateStublessProxies>
@@ -108,17 +120,18 @@
     </Midl>
     <ResourceCompile>
       <Culture>0x0409</Culture>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(IntDir);$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <ModuleDefinitionFile>.\PatternCredProv.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>.\MosaicCredProv.def</ModuleDefinitionFile>
       <RegisterOutput>true</RegisterOutput>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
@@ -130,7 +143,7 @@
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <HeaderFileName>PatternCredProv_i.h</HeaderFileName>
+      <HeaderFileName>src\PatternCredProv_i.h</HeaderFileName>
       <InterfaceIdentifierFileName>PatternCredProv_i.c</InterfaceIdentifierFileName>
       <ProxyFileName>PatternCredProv_p.c</ProxyFileName>
       <GenerateStublessProxies>true</GenerateStublessProxies>
@@ -140,17 +153,18 @@
     </Midl>
     <ResourceCompile>
       <Culture>0x0409</Culture>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(IntDir);$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <ModuleDefinitionFile>.\PatternCredProv.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>.\MosaicCredProv.def</ModuleDefinitionFile>
       <RegisterOutput>true</RegisterOutput>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
@@ -162,7 +176,7 @@
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <HeaderFileName>PatternCredProv_i.h</HeaderFileName>
+      <HeaderFileName>src\PatternCredProv_i.h</HeaderFileName>
       <InterfaceIdentifierFileName>PatternCredProv_i.c</InterfaceIdentifierFileName>
       <ProxyFileName>PatternCredProv_p.c</ProxyFileName>
       <GenerateStublessProxies>true</GenerateStublessProxies>
@@ -172,12 +186,12 @@
     </Midl>
     <ResourceCompile>
       <Culture>0x0409</Culture>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(IntDir);$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <ModuleDefinitionFile>.\PatternCredProv.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>.\MosaicCredProv.def</ModuleDefinitionFile>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <RegisterOutput>true</RegisterOutput>
@@ -185,6 +199,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
@@ -195,7 +210,7 @@
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <HeaderFileName>PatternCredProv_i.h</HeaderFileName>
+      <HeaderFileName>src\PatternCredProv_i.h</HeaderFileName>
       <InterfaceIdentifierFileName>PatternCredProv_i.c</InterfaceIdentifierFileName>
       <ProxyFileName>PatternCredProv_p.c</ProxyFileName>
       <GenerateStublessProxies>true</GenerateStublessProxies>
@@ -205,44 +220,44 @@
     </Midl>
     <ResourceCompile>
       <Culture>0x0409</Culture>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(IntDir);$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <ModuleDefinitionFile>.\PatternCredProv.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>.\MosaicCredProv.def</ModuleDefinitionFile>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <RegisterOutput>true</RegisterOutput>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CredentialFlow.h" />
-    <ClInclude Include="dllmain.h" />
-    <ClInclude Include="dprintf.h" />
-    <ClInclude Include="EnrollmentCrypto.h" />
-    <ClInclude Include="EnrollmentStore.h" />
-    <ClInclude Include="EnrollmentTypes.h" />
-    <ClInclude Include="FieldDescriptors.h" />
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="CredentialState.h" />
-    <ClInclude Include="MosaicPattern.h" />
-    <ClInclude Include="MosaicRender.h" />
-    <ClInclude Include="PatternCpCoClass.h" />
-    <ClInclude Include="PatternCpCredentialCoClass.h" />
-    <ClInclude Include="PatternCpFilterCoClass.h" />
-    <ClInclude Include="PatternCredProv_i.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="ProductConfig.h" />
-    <ClInclude Include="ProviderRegistration.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="VerifyDialog.h" />
-    <ClInclude Include="WindowsAuth.h" />
+    <ClInclude Include="src/CredentialFlow.h" />
+    <ClInclude Include="src/dllmain.h" />
+    <ClInclude Include="src/dprintf.h" />
+    <ClInclude Include="src/EnrollmentCrypto.h" />
+    <ClInclude Include="src/EnrollmentStore.h" />
+    <ClInclude Include="src/EnrollmentTypes.h" />
+    <ClInclude Include="src/FieldDescriptors.h" />
+    <ClInclude Include="src/framework.h" />
+    <ClInclude Include="src/CredentialState.h" />
+    <ClInclude Include="src/MosaicPattern.h" />
+    <ClInclude Include="src/MosaicRender.h" />
+    <ClInclude Include="src/MosaicCpCoClass.h" />
+    <ClInclude Include="src/MosaicCpCredentialCoClass.h" />
+    <ClInclude Include="src/MosaicCpFilterCoClass.h" />
+    <ClInclude Include="src/PatternCredProv_i.h" />
+    <ClInclude Include="src/pch.h" />
+    <ClInclude Include="src/ProductConfig.h" />
+    <ClInclude Include="src/ProviderRegistration.h" />
+    <ClInclude Include="src/Resource.h" />
+    <ClInclude Include="src/targetver.h" />
+    <ClInclude Include="src/VerifyDialog.h" />
+    <ClInclude Include="src/WindowsAuth.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CredentialFlow.cpp" />
-    <ClCompile Include="dllmain.cpp">
+    <ClCompile Include="src/CredentialFlow.cpp" />
+    <ClCompile Include="src/dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
@@ -256,14 +271,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="EnrollmentCrypto.cpp" />
-    <ClCompile Include="EnrollmentStore.cpp" />
-    <ClCompile Include="MosaicPattern.cpp" />
-    <ClCompile Include="MosaicRender.cpp" />
-    <ClCompile Include="PatternCpCoClass.cpp" />
-    <ClCompile Include="PatternCpCredentialCoClass.cpp" />
-    <ClCompile Include="PatternCpFilterCoClass.cpp" />
-    <ClCompile Include="PatternCredProv.cpp" />
+    <ClCompile Include="src/EnrollmentCrypto.cpp" />
+    <ClCompile Include="src/EnrollmentStore.cpp" />
+    <ClCompile Include="src/MosaicPattern.cpp" />
+    <ClCompile Include="src/MosaicRender.cpp" />
+    <ClCompile Include="src/MosaicCpCoClass.cpp" />
+    <ClCompile Include="src/MosaicCpCredentialCoClass.cpp" />
+    <ClCompile Include="src/MosaicCpFilterCoClass.cpp" />
+    <ClCompile Include="src/MosaicCredProv.cpp" />
     <ClCompile Include="PatternCredProv_i.c">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
@@ -278,33 +293,34 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="src/pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ProviderRegistration.cpp" />
-    <ClCompile Include="VerifyDialog.cpp" />
-    <ClCompile Include="WindowsAuth.cpp" />
+    <ClCompile Include="src/ProviderRegistration.cpp" />
+    <ClCompile Include="src/VerifyDialog.cpp" />
+    <ClCompile Include="src/WindowsAuth.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="PatternCredProv.rc" />
+    <ResourceCompile Include="res/MosaicCredProv.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
-    <None Include="PatternCpCredentialCoClass.rgs" />
-    <None Include="PatternCpFilterCoClass.rgs" />
-    <None Include="PatternCredentialProvider.rgs" />
-    <None Include="PatternCredProv.def" />
+    <None Include="MosaicCpCredentialCoClass.rgs" />
+    <None Include="MosaicCpFilterCoClass.rgs" />
+    <None Include="MosaicCredentialProvider.rgs" />
+    <None Include="MosaicCredProv.def" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="PatternCredProv.idl" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="bitmap1.bmp" />
+    <Image Include="res/bitmap1.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
 </Project>
+
