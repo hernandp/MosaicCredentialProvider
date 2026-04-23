@@ -1,15 +1,15 @@
-﻿// ----------------------------------------------------------------------------------------------------------------
-// Copyright 2026 Hernán Di Pietro
+// ----------------------------------------------------------------------------------------------------------------
+// Copyright 2026 Hernan Di Pietro
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
-// documentation files (the “Software”), to deal in the Software without restriction, including without limitation
+// documentation files (the "Software"), to deal in the Software without restriction, including without limitation
 // the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and
 // to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 //
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of
 // the Software.
 //
-// THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
 // THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
@@ -18,16 +18,18 @@
 #include "pch.h"
 #include "MosaicRender.h"
 
+const int GLYPH_MARGIN = 4;
+
 namespace
 {
-    COLORREF GetGlyphColor(int glyphType)
+    COLORREF GetGlyphColor(MosaicCellGlyph glyphType)
     {
         switch (glyphType) {
-        case 1:
+        case MosaicCellGlyph::Cross:
             return RGB(255, 0, 0);
-        case 2:
+        case MosaicCellGlyph::Square:
             return RGB(0, 160, 0);
-        case 3:
+        case MosaicCellGlyph::Circle:
             return RGB(0, 0, 255);
         default:
             return RGB(0, 0, 0);
@@ -35,7 +37,7 @@ namespace
     }
 }
 
-HBITMAP CreateFaceBitmap(int glyphType, int buttonSize)
+HBITMAP CreateGlyphBitmap(MosaicCellGlyph glyphType, int buttonSize)
 {
     const int width = buttonSize - 4;
     const int height = buttonSize - 4;
@@ -68,20 +70,25 @@ HBITMAP CreateFaceBitmap(int glyphType, int buttonSize)
     HGDIOBJ oldPen = SelectObject(hdcMem, pen);
     HGDIOBJ oldBrush = SelectObject(hdcMem, GetStockObject(NULL_BRUSH));
 
-    const int margin = 4;
     switch (glyphType) {
-    case 1:
-        MoveToEx(hdcMem, margin, margin, nullptr);
-        LineTo(hdcMem, width - margin, height - margin);
-        MoveToEx(hdcMem, width - margin, margin, nullptr);
-        LineTo(hdcMem, margin, height - margin);
+    case MosaicCellGlyph::Blank:
         break;
-    case 2:
-        Rectangle(hdcMem, margin, margin, width - margin, height - margin);
+
+    case MosaicCellGlyph::Cross:
+        MoveToEx(hdcMem, GLYPH_MARGIN, GLYPH_MARGIN, nullptr);
+        LineTo(hdcMem, width - GLYPH_MARGIN, height - GLYPH_MARGIN);
+        MoveToEx(hdcMem, width - GLYPH_MARGIN, GLYPH_MARGIN, nullptr);
+        LineTo(hdcMem, GLYPH_MARGIN, height - GLYPH_MARGIN);
         break;
-    case 3:
-        Ellipse(hdcMem, margin, margin, width - margin, height - margin);
+
+    case MosaicCellGlyph::Square:
+        Rectangle(hdcMem, GLYPH_MARGIN, GLYPH_MARGIN, width - GLYPH_MARGIN, height - GLYPH_MARGIN);
         break;
+
+    case MosaicCellGlyph::Circle:
+        Ellipse(hdcMem, GLYPH_MARGIN, GLYPH_MARGIN, width - GLYPH_MARGIN, height - GLYPH_MARGIN);
+        break;
+
     default:
         break;
     }

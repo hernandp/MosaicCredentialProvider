@@ -1,28 +1,31 @@
-﻿// ----------------------------------------------------------------------------------------------------------------
-// Copyright 2026 Hernán Di Pietro
+// ----------------------------------------------------------------------------------------------------------------
+// Copyright 2026 Hernan Di Pietro
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
-// documentation files (the “Software”), to deal in the Software without restriction, including without limitation
+// documentation files (the "Software"), to deal in the Software without restriction, including without limitation
 // the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and
 // to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 //
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of
 // the Software.
 //
-// THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
 // THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 // ----------------------------------------------------------------------------------------------------------------
 #include "pch.h"
-#include "VerifyDialog.h"
+#include "MosaicDialog.h"
 #include "MosaicPattern.h"
 #include "MosaicRender.h"
 #include "dprintf.h"
 
+
 namespace
 {
+    using GlyphToBitmap = std::unordered_map<MosaicCellGlyph, HBITMAP>;
+
     constexpr int BUTTON_BASE_ID = 3000;
     constexpr int BUTTON_SIZE = 48;
     constexpr int BUTTON_GAP = 4;
@@ -30,44 +33,35 @@ namespace
     constexpr int PROMPT_TOP = 10;
     constexpr int PROMPT_MARGIN = 10;
 
-    struct VerifyDialogContext
+    struct MosaicDialogContext
     {
-        LPCWSTR pszUserSid{ nullptr };
-        LPCWSTR pszTitle{ nullptr };
-        LPCWSTR pszPrompt{ nullptr };
-        MosaicPatternResult* result{ nullptr };
+        LPCWSTR pszUserSid = nullptr;
+        LPCWSTR pszTitle = nullptr;
+        LPCWSTR pszPrompt = nullptr;
+        MosaicDialogResult* result = nullptr;
     };
 
-    struct VerifyDialogState
+    struct MosaicDialogState
     {
-        HWND buttons[kMosaicButtonCount]{};
-        int faceState[kMosaicButtonCount]{};
-        HBITMAP bitmaps[3]{};
-        VerifyDialogContext context{};
+        std::array<HWND, MOSAIC_CELL_COUNT>             buttons{};
+        std::array<MosaicCellGlyph, MOSAIC_CELL_COUNT>  cellGlyphs{};
+        GlyphToBitmap                                   glyphToBitmap{};
+        MosaicDialogContext context{};
     };
 
-    void ApplyButtonFace(VerifyDialogState* state, int index)
+    void SetButtonGlyphImage(const MosaicDialogState* state, int buttonIndex) 
     {
-        if (state == nullptr || index < 0 || index >= kMosaicButtonCount || state->buttons[index] == nullptr) {
-            return;
-        }
-
-        const int face = state->faceState[index];
-        HBITMAP hFace = nullptr;
-        if (face >= MOSAIC_BITMAP_CROSS && face <= MOSAIC_BITMAP_CIRCLE) {
-            hFace = state->bitmaps[face - 1];
-        }
-
-        SendMessageW(state->buttons[index], BM_SETIMAGE, IMAGE_BITMAP, reinterpret_cast<LPARAM>(hFace));
+        const auto glyphAtIndex = state->cellGlyphs[buttonIndex];
+        SendMessageW(state->buttons[buttonIndex], BM_SETIMAGE, IMAGE_BITMAP, reinterpret_cast<LPARAM>(state->glyphToBitmap.at(glyphAtIndex)));
     }
 
-    void CreateMosaicButtons(HWND hwndDlg, VerifyDialogState* state)
+    void CreateMosaicButtons(HWND hwndDlg, MosaicDialogState* state)
     {
         RECT rcClient{};
         GetClientRect(hwndDlg, &rcClient);
 
-        const int mosaicWidth = (kMosaicButtonCols * BUTTON_SIZE) + ((kMosaicButtonCols - 1) * BUTTON_GAP);
-        const int mosaicHeight = (kMosaicButtonRows * BUTTON_SIZE) + ((kMosaicButtonRows - 1) * BUTTON_GAP);
+        const int mosaicWidth = (MOSAIC_CELL_COLS * BUTTON_SIZE) + ((MOSAIC_CELL_COLS - 1) * BUTTON_GAP);
+        const int mosaicHeight = (MOSAIC_CELL_ROWS * BUTTON_SIZE) + ((MOSAIC_CELL_ROWS - 1) * BUTTON_GAP);
         const int originX = (rcClient.right - mosaicWidth) / 2;
         const int promptBottom = state->context.pszPrompt != nullptr ? (PROMPT_TOP + PROMPT_HEIGHT + 8) : 0;
         const int availableHeight = rcClient.bottom - promptBottom - 28;
@@ -89,10 +83,10 @@ namespace
                 nullptr);
         }
 
-        for (int row = 0; row < kMosaicButtonRows; ++row) {
+        for (int row = 0; row < MOSAIC_CELL_ROWS; ++row) {
             const int y = originY + row * (BUTTON_SIZE + BUTTON_GAP);
-            for (int col = 0; col < kMosaicButtonCols; ++col) {
-                const int index = row * kMosaicButtonCols + col;
+            for (int col = 0; col < MOSAIC_CELL_COLS; ++col) {
+                const int index = row * MOSAIC_CELL_COLS + col;
                 const int x = originX + col * (BUTTON_SIZE + BUTTON_GAP);
                 HWND hButton = CreateWindowExW(
                     0,
@@ -109,19 +103,22 @@ namespace
                     nullptr);
 
                 state->buttons[index] = hButton;
-                state->faceState[index] = MOSAIC_STATE_EMPTY;
-                ApplyButtonFace(state, index);
+                state->cellGlyphs[index] = MosaicCellGlyph::Blank;
+
+                SetButtonGlyphImage(state, index);
             }
         }
     }
 
-    void CleanupState(VerifyDialogState* state)
+    void CleanupState(MosaicDialogState* state)
     {
         if (state == nullptr) {
             return;
         }
 
-        for (HBITMAP hBmp : state->bitmaps) {
+
+        for (const auto& mapEntry : state->glyphToBitmap) {
+            auto hBmp = mapEntry.second;
             if (hBmp != nullptr) {
                 DeleteObject(hBmp);
             }
@@ -131,36 +128,42 @@ namespace
     }
 }
 
-INT_PTR VerifyDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+INT_PTR MosaicDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     switch (uMsg) {
     case WM_INITDIALOG:
     {
-        auto* context = reinterpret_cast<VerifyDialogContext*>(lParam);
+        auto* context = reinterpret_cast<MosaicDialogContext*>(lParam);
         dprintfW(L"[dlg] initialized for user SID: %s\n", context != nullptr ? context->pszUserSid : L"(null)");
+
         if (context != nullptr && context->pszTitle != nullptr) {
             SetWindowTextW(hwndDlg, context->pszTitle);
         }
 
         if (HWND hwndParent = GetParent(hwndDlg)) {
+
             RECT rcParent{}, rcDlg{};
+
             GetWindowRect(hwndParent, &rcParent);
             GetWindowRect(hwndDlg, &rcDlg);
+
             const int x = rcParent.left + (rcParent.right - rcParent.left - (rcDlg.right - rcDlg.left)) / 2;
             const int y = rcParent.top + (rcParent.bottom - rcParent.top - (rcDlg.bottom - rcDlg.top)) / 2;
             SetWindowPos(hwndDlg, nullptr, x, y, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
         }
 
-        auto* state = new (std::nothrow) VerifyDialogState();
+        auto* state = new (std::nothrow) MosaicDialogState();
         if (state == nullptr) {
             EndDialog(hwndDlg, IDCANCEL);
             return FALSE;
         }
 
-        state->context = context != nullptr ? *context : VerifyDialogContext{};
-        state->bitmaps[0] = CreateFaceBitmap(MOSAIC_BITMAP_CROSS, BUTTON_SIZE);
-        state->bitmaps[1] = CreateFaceBitmap(MOSAIC_BITMAP_SQUARE, BUTTON_SIZE);
-        state->bitmaps[2] = CreateFaceBitmap(MOSAIC_BITMAP_CIRCLE, BUTTON_SIZE);
+        state->context = context != nullptr ? *context : MosaicDialogContext{};
+        state->glyphToBitmap[MosaicCellGlyph::Blank] = CreateGlyphBitmap(MosaicCellGlyph::Blank, BUTTON_SIZE);
+        state->glyphToBitmap[MosaicCellGlyph::Cross] = CreateGlyphBitmap(MosaicCellGlyph::Cross, BUTTON_SIZE);
+        state->glyphToBitmap[MosaicCellGlyph::Square] = CreateGlyphBitmap(MosaicCellGlyph::Square, BUTTON_SIZE);
+        state->glyphToBitmap[MosaicCellGlyph::Circle] = CreateGlyphBitmap(MosaicCellGlyph::Circle, BUTTON_SIZE);
+
         SetWindowLongPtrW(hwndDlg, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(state));
         CreateMosaicButtons(hwndDlg, state);
         return TRUE;
@@ -170,19 +173,23 @@ INT_PTR VerifyDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
         const WORD controlId = LOWORD(wParam);
         const WORD notifyCode = HIWORD(wParam);
-        auto* state = reinterpret_cast<VerifyDialogState*>(GetWindowLongPtrW(hwndDlg, GWLP_USERDATA));
+        auto* state = reinterpret_cast<MosaicDialogState*>(GetWindowLongPtrW(hwndDlg, GWLP_USERDATA));
 
-        if (notifyCode == BN_CLICKED && controlId >= BUTTON_BASE_ID && controlId < BUTTON_BASE_ID + kMosaicButtonCount && state != nullptr) {
+        if (notifyCode == BN_CLICKED && controlId >= BUTTON_BASE_ID && controlId < BUTTON_BASE_ID + MOSAIC_CELL_COUNT && state != nullptr) {
             const int index = static_cast<int>(controlId - BUTTON_BASE_ID);
-            state->faceState[index] = (state->faceState[index] + 1) % MOSAIC_STATE_COUNT;
-            ApplyButtonFace(state, index);
+
+            // cycle over enum indices -- yes this is horrible since "enum class" do not auto cast to int
+            // like the pre-C++ 11 enums.
+
+            state->cellGlyphs[index] = static_cast<MosaicCellGlyph>(((int)state->cellGlyphs[index] + 1) % (int)MosaicCellGlyph::GlyphCount);
+            SetButtonGlyphImage(state, index);
             return TRUE;
         }
 
         if (controlId == IDOK && state != nullptr) {
             if (state->context.result != nullptr) {
                 state->context.result->confirmed = true;
-                state->context.result->normalizedPattern = BuildNormalizedPattern(state->faceState, kMosaicButtonCount);
+                state->context.result->normalizedPattern = BuildNormalizedPattern(state->cellGlyphs);
             }
 
             EndDialog(hwndDlg, IDOK);
@@ -198,7 +205,7 @@ INT_PTR VerifyDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
     case WM_DESTROY:
     {
-        auto* state = reinterpret_cast<VerifyDialogState*>(GetWindowLongPtrW(hwndDlg, GWLP_USERDATA));
+        auto* state = reinterpret_cast<MosaicDialogState*>(GetWindowLongPtrW(hwndDlg, GWLP_USERDATA));
         CleanupState(state);
         SetWindowLongPtrW(hwndDlg, GWLP_USERDATA, 0);
         return TRUE;
@@ -208,11 +215,11 @@ INT_PTR VerifyDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
     return FALSE;
 }
 
-HRESULT OpenVerifyDialog(HWND hwndParent, LPCWSTR pszUserSid, LPCWSTR pszTitle, LPCWSTR pszPrompt, MosaicPatternResult& result)
+HRESULT OpenMosaicDialog(HWND hwndParent, LPCWSTR pszUserSid, LPCWSTR pszTitle, LPCWSTR pszPrompt, MosaicDialogResult& result)
 {
-    result = MosaicPatternResult{};
+    result = MosaicDialogResult{};
 
-    VerifyDialogContext context{};
+    MosaicDialogContext context{};
     context.pszUserSid = pszUserSid;
     context.pszTitle = pszTitle;
     context.pszPrompt = pszPrompt;
@@ -220,9 +227,9 @@ HRESULT OpenVerifyDialog(HWND hwndParent, LPCWSTR pszUserSid, LPCWSTR pszTitle, 
 
     const INT_PTR dlgResult = ATL::AtlAxDialogBoxW(
         ATL::_AtlBaseModule.GetModuleInstance(),
-        MAKEINTRESOURCEW(IDD_VERIFY_DIALOG),
+        MAKEINTRESOURCEW(IDD_MOSAIC_DIALOG),
         hwndParent,
-        VerifyDlgProc,
+        MosaicDialogProc,
         reinterpret_cast<LPARAM>(&context));
 
     if (dlgResult == -1) {

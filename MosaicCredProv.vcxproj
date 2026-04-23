@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -110,11 +110,11 @@
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <HeaderFileName>src\PatternCredProv_i.h</HeaderFileName>
-      <InterfaceIdentifierFileName>PatternCredProv_i.c</InterfaceIdentifierFileName>
+      <HeaderFileName>src\MosaicCredProv_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>MosaicCredProv_i.c</InterfaceIdentifierFileName>
       <ProxyFileName />
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)PatternCredProv.tlb</TypeLibraryName>
+      <TypeLibraryName>$(IntDir)MosaicCredProv.tlb</TypeLibraryName>
       <DllDataFileName />
       <ValidateAllParameters>true</ValidateAllParameters>
     </Midl>
@@ -138,16 +138,18 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <SDLCheck>true</SDLCheck>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <HeaderFileName>src\PatternCredProv_i.h</HeaderFileName>
-      <InterfaceIdentifierFileName>PatternCredProv_i.c</InterfaceIdentifierFileName>
+      <HeaderFileName>src\MosaicCredProv_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>MosaicCredProv_i.c</InterfaceIdentifierFileName>
       <ProxyFileName />
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)PatternCredProv.tlb</TypeLibraryName>
+      <TypeLibraryName>$(IntDir)MosaicCredProv.tlb</TypeLibraryName>
       <DllDataFileName />
       <ValidateAllParameters>true</ValidateAllParameters>
     </Midl>
@@ -171,16 +173,18 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <SDLCheck>true</SDLCheck>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <HeaderFileName>src\PatternCredProv_i.h</HeaderFileName>
-      <InterfaceIdentifierFileName>PatternCredProv_i.c</InterfaceIdentifierFileName>
+      <HeaderFileName>src\MosaicCredProv_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>MosaicCredProv_i.c</InterfaceIdentifierFileName>
       <ProxyFileName />
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)PatternCredProv.tlb</TypeLibraryName>
+      <TypeLibraryName>$(IntDir)MosaicCredProv.tlb</TypeLibraryName>
       <DllDataFileName />
       <ValidateAllParameters>true</ValidateAllParameters>
     </Midl>
@@ -206,15 +210,17 @@
       <PreprocessorDefinitions>_WINDOWS;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <SDLCheck>true</SDLCheck>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <HeaderFileName>src\PatternCredProv_i.h</HeaderFileName>
-      <InterfaceIdentifierFileName>PatternCredProv_i.c</InterfaceIdentifierFileName>
+      <HeaderFileName>src\MosaicCredProv_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>MosaicCredProv_i.c</InterfaceIdentifierFileName>
       <ProxyFileName />
       <GenerateStublessProxies>true</GenerateStublessProxies>
-      <TypeLibraryName>$(IntDir)PatternCredProv.tlb</TypeLibraryName>
+      <TypeLibraryName>$(IntDir)MosaicCredProv.tlb</TypeLibraryName>
       <DllDataFileName />
       <ValidateAllParameters>true</ValidateAllParameters>
     </Midl>
@@ -246,13 +252,13 @@
     <ClInclude Include="src/MosaicCpCoClass.h" />
     <ClInclude Include="src/MosaicCpCredentialCoClass.h" />
     <ClInclude Include="src/MosaicCpFilterCoClass.h" />
-    <ClInclude Include="src/PatternCredProv_i.h" />
+    <ClInclude Include="src/MosaicCredProv_i.h" />
     <ClInclude Include="src/pch.h" />
     <ClInclude Include="src/ProductConfig.h" />
     <ClInclude Include="src/ProviderRegistration.h" />
     <ClInclude Include="src/Resource.h" />
     <ClInclude Include="src/targetver.h" />
-    <ClInclude Include="src/VerifyDialog.h" />
+    <ClInclude Include="src/MosaicDialog.h" />
     <ClInclude Include="src/WindowsAuth.h" />
   </ItemGroup>
   <ItemGroup>
@@ -279,7 +285,7 @@
     <ClCompile Include="src/MosaicCpCredentialCoClass.cpp" />
     <ClCompile Include="src/MosaicCpFilterCoClass.cpp" />
     <ClCompile Include="src/MosaicCredProv.cpp" />
-    <ClCompile Include="PatternCredProv_i.c">
+    <ClCompile Include="MosaicCredProv_i.c">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
@@ -300,7 +306,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src/ProviderRegistration.cpp" />
-    <ClCompile Include="src/VerifyDialog.cpp" />
+    <ClCompile Include="src/MosaicDialog.cpp" />
     <ClCompile Include="src/WindowsAuth.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -314,7 +320,7 @@
     <None Include="MosaicCredProv.def" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="PatternCredProv.idl" />
+    <Midl Include="MosaicCredProv.idl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res/bitmap1.bmp" />
@@ -323,4 +329,3 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
 </Project>
-
