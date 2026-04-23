@@ -1,14 +1,18 @@
-# Mosaic Credential Provider
 
-<img width="1254" height="1254" alt="logo" src="https://github.com/user-attachments/assets/87742f50-703c-4525-aabb-46fd348c92c8" />
+<div align="center">
+<img width="243" height="238" alt="logo" src="https://github.com/user-attachments/assets/26b30031-d23e-4b86-83db-064853f15a96" />
 
-This project includes a Credential Provider for Windows implementing a mosaic puzzle as a login mechanism for the user, similar  to the patterns used to unlock smartphones.
+<h1>Mosaic Credential Provider</h1>
+</div>
+
+This project consists of a **Credential Provider for Windows** COM object implementing a mosaic puzzle as a login mechanism for the user, similar  to the patterns used to unlock smartphones.  
 
 ## Overview 
 
 What this  Credential Provider does?
 
-Offers the user to enroll to the "Mosaic Credential Provider", which will allow him to use a personal Mozaic Puzzle design as an unlock mechanism for logon to his session. The Mosaic Puzzle is  4x4 grid that can contain a blank space, a green square, a blue circle or a red cross(X). This puzzle generates a cryptographically generated key for which the main logon password account can be derived. Secrets are stored using the Windows DPAPI under a SYSTEM secured registry key.
+It offers the user to enroll to the "Mosaic Credential Provider", which will allow him to use a personal Mozaic Puzzle design as an unlock credential. The Mosaic Puzzle is a 4x4 grid that can contain a blank space, a green square, a blue circle or a red cross(X) in each cell. This puzzle generates a cryptographically-generated key for which the main logon password account can be derived. Secrets are stored using the Windows DPAPI under a SYSTEM secured registry key.
+
 The system also offers a secure mechanism to reset the mosaic pattern to a new one, if the user forgot it.
 
 ## Requirements and Installation
