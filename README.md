@@ -1,12 +1,15 @@
 # Mosaic Credential Provider
 
+<img width="1254" height="1254" alt="logo" src="https://github.com/user-attachments/assets/87742f50-703c-4525-aabb-46fd348c92c8" />
+
 This project includes a Credential Provider for Windows implementing a mosaic puzzle as a login mechanism for the user, similar  to the patterns used to unlock smartphones.
 
 ## Overview 
 
 What this  Credential Provider does?
 
-Offers the user to enroll to the "Mosaic Credential Provider", which will allow him to use a personal Mozaic Puzzle design -a 4x4 grid that can contain a square, a circle or an X, 
+Offers the user to enroll to the "Mosaic Credential Provider", which will allow him to use a personal Mozaic Puzzle design as an unlock mechanism for logon to his session. The Mosaic Puzzle is  4x4 grid that can contain a blank space, a green square, a blue circle or a red cross(X). This puzzle generates a cryptographically generated key for which the main logon password account can be derived. Secrets are stored using the Windows DPAPI under a SYSTEM secured registry key.
+The system also offers a secure mechanism to reset the mosaic pattern to a new one, if the user forgot it.
 
 ## Requirements and Installation
 
@@ -49,19 +52,15 @@ and `<conf>` either `Debug` or `Release`.
  
 ## After-Install registry keys 
 
-The following registry keys will be installed on your target system:
+Besides the `HKEY_CLASSES_ROOT\CLSID` entries for COM registrations, the following registry keys will be installed on your target system:
 
 | Registry key | Used for |
 |---|---|
-| `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\{30106E01-B65F-480E-993E-92D5D7310C5E}` | Registers the main Mosaic Credential Provider tile with LogonUI. The default value is `Mosaic Credential Provider`. |
-| `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\Credential Provider Filters\{5DAAB89B-38AC-437E-94F9-2379127F8564}` | Registers the optional Credential Provider Filter COM class. The default value is `Mosaic Credential Provider Filter`. |
-| `HKEY_LOCAL_MACHINE\SOFTWARE\HernanDiPietro\MosaicCredentialProvider` | Product configuration root created by `DllInstall`. Currently stores the provider-wide `Enabled` flag used by `SetUsageScenario` to decide whether the provider should participate. |
-| `HKEY_LOCAL_MACHINE\SOFTWARE\HernanDiPietro\MosaicCredentialProvider\Enrollment` | Parent container for per-user enrollment state. This key is created on demand as users enroll. |
-| `HKEY_LOCAL_MACHINE\SOFTWARE\HernanDiPietro\MosaicCredentialProvider\Enrollment\{User SID}` | Per-user enrollment record. Stores `Enabled` and the DPAPI-protected `ProtectedBlob` that ties the Windows password to the enrolled mosaic pattern. Example SID form: `S-1-5-21-...-1001`. |
-| `HKEY_CLASSES_ROOT\CLSID\{30106E01-B65F-480E-993E-92D5D7310C5E}` | COM registration for `MosaicCredentialProvider`. Created by COM self-registration (`DllRegisterServer`) and the `MosaicCredentialProvider.rgs` script. |
-| `HKEY_CLASSES_ROOT\CLSID\{6EDDC324-1233-4597-B163-2C989210ACEB}` | COM registration for `MosaicCredentialProviderCredential`. This is the credential object instantiated by the provider for each tile. |
-| `HKEY_CLASSES_ROOT\CLSID\{5DAAB89B-38AC-437E-94F9-2379127F8564}` | COM registration for `MosaicCredentialProviderFilter`. Created by COM self-registration and the `MosaicCpFilterCoClass.rgs` script. |
-| `HKEY_CLASSES_ROOT\TypeLib\{5183C3D9-9A6A-4A8C-9034-FB77634C68B5}` | Type library registration for `MosaicCredProvLib`. This is part of normal ATL/MIDL COM registration performed by `DllRegisterServer`. |
+| `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\{30106E01-B65F-480E-993E-92D5D7310C5E}` | Registers the main Mosaic Credential Provider tile with LogonUI. The default value is `Mosaic Credential Provider`. |
+| `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\Credential Provider Filters\{5DAAB89B-38AC-437E-94F9-2379127F8564}` | Registers the optional Credential Provider Filter COM class. The default value is `Mosaic Credential Provider Filter`. |
+| `HKLM\SOFTWARE\HernanDiPietro\MosaicCredentialProvider` | Product configuration root created by `DllInstall`. Currently stores the provider-wide `Enabled` flag used by `SetUsageScenario` to decide whether the provider should participate. |
+| `HKLM\SOFTWARE\HernanDiPietro\MosaicCredentialProvider\Enrollment` | Parent container for per-user enrollment state. This key is created on demand as users enroll. |
+| `HKLM\SOFTWARE\HernanDiPietro\MosaicCredentialProvider\Enrollment\{User SID}` | Per-user enrollment record. Stores `Enabled` and the DPAPI-protected `ProtectedBlob` that ties the Windows password to the enrolled mosaic pattern. Example SID form: `S-1-5-21-...-1001`. |
 
 ### CLSIDs and COM identifiers
 
