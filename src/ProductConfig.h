@@ -18,4 +18,5 @@
 #pragma once
 
 constexpr wchar_t g_wszProductName[] = L"Mosaic Credential Provider";
-constexpr wchar_t g_wszProductKeyPath[] = L"SOFTWARE\\HernanDiPietro\\PatternCredentialProvider";
+constexpr wchar_t g_wszProductKeyPath[] = L"SOFTWARE\\HernanDiPietro\\MosaicCredentialProvider";
+

@@ -21,7 +21,7 @@
 - Keep the root `LICENSE` file in sync with those headers.
 
 ## Generated And Interface Files
-- `src/PatternCredProv_i.h` and `PatternCredProv_i.c` are generated/interface artifacts but are committed in the repository.
+- `src/MosaicCredProv_i.h` and `MosaicCredProv_i.c` are generated/interface artifacts but are committed in the repository.
 - Do not edit generated files casually. If interface definitions change, regenerate them consistently instead of patching them by hand unless there is a specific reason.
 
 ## Credential Provider Guardrails
@@ -50,3 +50,4 @@
 - Prefer behavior-preserving refactors unless the task explicitly asks for product changes.
 - When adding a new source file, include the repository license header immediately.
 - Keep comments factual and sparse.
+

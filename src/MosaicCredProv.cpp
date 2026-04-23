@@ -21,7 +21,7 @@
 #include "pch.h"
 #include "framework.h"
 #include "resource.h"
-#include "PatternCredProv_i.h"
+#include "MosaicCredProv_i.h"
 #include "dllmain.h"
 #include "dprintf.h"
 #include "ProviderRegistration.h"
@@ -122,5 +122,6 @@ STDAPI DllInstall(BOOL bInstall, _In_opt_  LPCWSTR pszCmdLine)
     }
 	return S_OK;
 }
+
 
 

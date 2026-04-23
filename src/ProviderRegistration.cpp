@@ -17,7 +17,7 @@
 // ----------------------------------------------------------------------------------------------------------------
 #include "pch.h"
 #include "framework.h"
-#include "PatternCredProv_i.h"
+#include "MosaicCredProv_i.h"
 #include "ProductConfig.h"
 #include "dllmain.h"
 #include "dprintf.h"
@@ -32,7 +32,7 @@ HRESULT RegisterCredentialProviderFilter() {
 	}
 
 	LPOLESTR szClsId = nullptr;
-	HRESULT hr = StringFromCLSID(CLSID_PatternCredentialProviderFilter, &szClsId);
+	HRESULT hr = StringFromCLSID(CLSID_MosaicCredentialProviderFilter, &szClsId);
 	if (FAILED(hr)) {
 		dprintfW(L"Failed to convert CLSID to string, HR = 0x%08x\n", hr);
 		return hr;
@@ -63,7 +63,7 @@ HRESULT RegisterCredentialProvider()
 	}
 
 	LPOLESTR szClsId = nullptr;
-	HRESULT hr = StringFromCLSID(CLSID_PatternCredentialProvider, &szClsId);
+	HRESULT hr = StringFromCLSID(CLSID_MosaicCredentialProvider, &szClsId);
 	if (FAILED(hr)) {
 		dprintfW(L"Failed to convert CLSID to string, HR = 0x%08x\n", hr);
 		return hr;
@@ -97,7 +97,7 @@ HRESULT UnregisterCredentialProviderFilter()
 	}
 
 	LPOLESTR szClsId = nullptr;
-	HRESULT hr = StringFromCLSID(CLSID_PatternCredentialProviderFilter, &szClsId);
+	HRESULT hr = StringFromCLSID(CLSID_MosaicCredentialProviderFilter, &szClsId);
 	if (FAILED(hr)) {
 		dprintfW(L"Failed to convert CLSID to string, HR = 0x%08x\n", hr);
 		return hr;
@@ -123,7 +123,7 @@ HRESULT UnregisterCredentialProvider()
 	}
 
 	LPOLESTR szClsId = nullptr;
-	HRESULT hr = StringFromCLSID(CLSID_PatternCredentialProvider, &szClsId);
+	HRESULT hr = StringFromCLSID(CLSID_MosaicCredentialProvider, &szClsId);
 	if (FAILED(hr)) {
 		dprintfW(L"Failed to convert CLSID to string, HR = 0x%08x\n", hr);
 		return hr;
@@ -172,3 +172,4 @@ HRESULT UnregisterProductConfiguration()
 	dprintfW(L"Product configuration registry entries removed successfully\n");
 	return S_OK;
 }
+

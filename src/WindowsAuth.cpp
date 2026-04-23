@@ -18,7 +18,7 @@
 #include "pch.h"
 #include "WindowsAuth.h"
 
-#include "PatternCredProv_i.h"
+#include "MosaicCredProv_i.h"
 
 #include <ntsecapi.h>
 #include <vector>
@@ -174,9 +174,10 @@ HRESULT BuildSerializationForCurrentUser(
     }
 
     pcpcs->ulAuthenticationPackage = authPackage;
-    pcpcs->clsidCredentialProvider = CLSID_PatternCredentialProvider;
+    pcpcs->clsidCredentialProvider = CLSID_MosaicCredentialProvider;
     pcpcs->cbSerialization = cbSerialization;
     pcpcs->rgbSerialization = rgbSerialization;
     *pcpgsr = CPGSR_RETURN_CREDENTIAL_FINISHED;
     return S_OK;
 }
+

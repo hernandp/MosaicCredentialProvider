@@ -20,7 +20,7 @@
 #include "pch.h"
 #include "framework.h"
 #include "resource.h"
-#include "PatternCredProv_i.h"
+#include "MosaicCredProv_i.h"
 #include "dllmain.h"
 
 CMosaicCredProvModule _AtlModule;
@@ -31,3 +31,4 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 	hInstance;
 	return _AtlModule.DllMain(dwReason, lpReserved);
 }
+

@@ -16,10 +16,11 @@
 // SOFTWARE.
 // ----------------------------------------------------------------------------------------------------------------
 // dllmain.h : Declaration of module class.
-#include "PatternCredProv_i.h"
+#include "MosaicCredProv_i.h"
 
 class CMosaicCredProvModule : public ATL::CAtlDllModuleT< CMosaicCredProvModule > {
 };
 
 extern class CMosaicCredProvModule _AtlModule;
+
 

@@ -15,11 +15,11 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 // ----------------------------------------------------------------------------------------------------------------
-// PatternCredProv.idl : IDL source for PatternCredProv
+// MosaicCredProv.idl : IDL source for MosaicCredProv
 //
 
 // This file will be processed by the MIDL tool to
-// produce the type library (PatternCredProv.tlb) and marshalling code.
+// produce the type library (MosaicCredProv.tlb) and marshalling code.
 
 import "oaidl.idl";
 import "ocidl.idl";
@@ -29,14 +29,14 @@ import "shobjidl.idl";
 [
 	uuid(5183C3D9-9A6A-4A8C-9034-FB77634C68B5)
 ]
-library PatternCredProvLib
+library MosaicCredProvLib
 {
 	importlib("stdole2.tlb");
 
 	[
 		uuid(30106E01-B65F-480E-993E-92D5D7310C5E)
 	]
-	coclass PatternCredentialProvider
+	coclass MosaicCredentialProvider
 	{
 		[default] interface ICredentialProvider;
         interface ICredentialProviderSetUserArray;		
@@ -44,16 +44,17 @@ library PatternCredProvLib
 	[
 		uuid(6eddc324-1233-4597-b163-2c989210aceb)
 	] 
-	coclass PatternCredentialProviderCredential 
+	coclass MosaicCredentialProviderCredential 
 	{
         [default] interface ICredentialProviderCredential2;		  
 	};
 	[
 		uuid(5daab89b-38ac-437e-94f9-2379127f8564)
 	]
-	coclass PatternCredentialProviderFilter
+	coclass MosaicCredentialProviderFilter
 	{
 		[default] interface ICredentialProviderFilter;
 	};
 };
+
 

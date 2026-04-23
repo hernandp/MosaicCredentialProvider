@@ -37,7 +37,7 @@
     <ClInclude Include="src/dllmain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src/PatternCredProv_i.h">
+    <ClInclude Include="src/MosaicCredProv_i.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="src/pch.h">
@@ -96,7 +96,7 @@
     <ClCompile Include="src/dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PatternCredProv_i.c">
+    <ClCompile Include="MosaicCredProv_i.c">
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="src/pch.cpp">
@@ -154,7 +154,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="PatternCredProv.idl">
+    <Midl Include="MosaicCredProv.idl">
       <Filter>Source Files</Filter>
     </Midl>
   </ItemGroup>
@@ -164,4 +164,5 @@
     </Image>
   </ItemGroup>
 </Project>
+
 

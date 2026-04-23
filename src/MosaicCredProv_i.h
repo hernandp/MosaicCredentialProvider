@@ -6,7 +6,7 @@
  /* File created by MIDL compiler version 8.01.0628 */
 /* at Tue Jan 19 00:14:07 2038
  */
-/* Compiler settings for PatternCredProv.idl:
+/* Compiler settings for MosaicCredProv.idl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
     protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
@@ -31,8 +31,8 @@
 #endif /* __RPCNDR_H_VERSION__ */
 
 
-#ifndef __PatternCredProv_i_h__
-#define __PatternCredProv_i_h__
+#ifndef __MosaicCredProv_i_h__
+#define __MosaicCredProv_i_h__
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -48,40 +48,40 @@
 
 /* Forward Declarations */ 
 
-#ifndef __PatternCredentialProvider_FWD_DEFINED__
-#define __PatternCredentialProvider_FWD_DEFINED__
+#ifndef __MosaicCredentialProvider_FWD_DEFINED__
+#define __MosaicCredentialProvider_FWD_DEFINED__
 
 #ifdef __cplusplus
-typedef class PatternCredentialProvider PatternCredentialProvider;
+typedef class MosaicCredentialProvider MosaicCredentialProvider;
 #else
-typedef struct PatternCredentialProvider PatternCredentialProvider;
+typedef struct MosaicCredentialProvider MosaicCredentialProvider;
 #endif /* __cplusplus */
 
-#endif 	/* __PatternCredentialProvider_FWD_DEFINED__ */
+#endif 	/* __MosaicCredentialProvider_FWD_DEFINED__ */
 
 
-#ifndef __PatternCredentialProviderCredential_FWD_DEFINED__
-#define __PatternCredentialProviderCredential_FWD_DEFINED__
+#ifndef __MosaicCredentialProviderCredential_FWD_DEFINED__
+#define __MosaicCredentialProviderCredential_FWD_DEFINED__
 
 #ifdef __cplusplus
-typedef class PatternCredentialProviderCredential PatternCredentialProviderCredential;
+typedef class MosaicCredentialProviderCredential MosaicCredentialProviderCredential;
 #else
-typedef struct PatternCredentialProviderCredential PatternCredentialProviderCredential;
+typedef struct MosaicCredentialProviderCredential MosaicCredentialProviderCredential;
 #endif /* __cplusplus */
 
-#endif 	/* __PatternCredentialProviderCredential_FWD_DEFINED__ */
+#endif 	/* __MosaicCredentialProviderCredential_FWD_DEFINED__ */
 
 
-#ifndef __PatternCredentialProviderFilter_FWD_DEFINED__
-#define __PatternCredentialProviderFilter_FWD_DEFINED__
+#ifndef __MosaicCredentialProviderFilter_FWD_DEFINED__
+#define __MosaicCredentialProviderFilter_FWD_DEFINED__
 
 #ifdef __cplusplus
-typedef class PatternCredentialProviderFilter PatternCredentialProviderFilter;
+typedef class MosaicCredentialProviderFilter MosaicCredentialProviderFilter;
 #else
-typedef struct PatternCredentialProviderFilter PatternCredentialProviderFilter;
+typedef struct MosaicCredentialProviderFilter MosaicCredentialProviderFilter;
 #endif /* __cplusplus */
 
-#endif 	/* __PatternCredentialProviderFilter_FWD_DEFINED__ */
+#endif 	/* __MosaicCredentialProviderFilter_FWD_DEFINED__ */
 
 
 /* header files for imported files */
@@ -96,39 +96,39 @@ extern "C"{
 
 
 
-#ifndef __PatternCredProvLib_LIBRARY_DEFINED__
-#define __PatternCredProvLib_LIBRARY_DEFINED__
+#ifndef __MosaicCredProvLib_LIBRARY_DEFINED__
+#define __MosaicCredProvLib_LIBRARY_DEFINED__
 
-/* library PatternCredProvLib */
+/* library MosaicCredProvLib */
 /* [uuid] */ 
 
 
-EXTERN_C const IID LIBID_PatternCredProvLib;
+EXTERN_C const IID LIBID_MosaicCredProvLib;
 
-EXTERN_C const CLSID CLSID_PatternCredentialProvider;
+EXTERN_C const CLSID CLSID_MosaicCredentialProvider;
 
 #ifdef __cplusplus
 
 class DECLSPEC_UUID("30106E01-B65F-480E-993E-92D5D7310C5E")
-PatternCredentialProvider;
+MosaicCredentialProvider;
 #endif
 
-EXTERN_C const CLSID CLSID_PatternCredentialProviderCredential;
+EXTERN_C const CLSID CLSID_MosaicCredentialProviderCredential;
 
 #ifdef __cplusplus
 
 class DECLSPEC_UUID("6eddc324-1233-4597-b163-2c989210aceb")
-PatternCredentialProviderCredential;
+MosaicCredentialProviderCredential;
 #endif
 
-EXTERN_C const CLSID CLSID_PatternCredentialProviderFilter;
+EXTERN_C const CLSID CLSID_MosaicCredentialProviderFilter;
 
 #ifdef __cplusplus
 
 class DECLSPEC_UUID("5daab89b-38ac-437e-94f9-2379127f8564")
-PatternCredentialProviderFilter;
+MosaicCredentialProviderFilter;
 #endif
-#endif /* __PatternCredProvLib_LIBRARY_DEFINED__ */
+#endif /* __MosaicCredProvLib_LIBRARY_DEFINED__ */
 
 /* Additional Prototypes for ALL interfaces */
 
