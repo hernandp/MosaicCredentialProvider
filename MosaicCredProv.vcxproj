@@ -112,7 +112,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <HeaderFileName>src\PatternCredProv_i.h</HeaderFileName>
       <InterfaceIdentifierFileName>PatternCredProv_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>PatternCredProv_p.c</ProxyFileName>
+      <ProxyFileName />
       <GenerateStublessProxies>true</GenerateStublessProxies>
       <TypeLibraryName>$(IntDir)PatternCredProv.tlb</TypeLibraryName>
       <DllDataFileName />
@@ -145,7 +145,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <HeaderFileName>src\PatternCredProv_i.h</HeaderFileName>
       <InterfaceIdentifierFileName>PatternCredProv_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>PatternCredProv_p.c</ProxyFileName>
+      <ProxyFileName />
       <GenerateStublessProxies>true</GenerateStublessProxies>
       <TypeLibraryName>$(IntDir)PatternCredProv.tlb</TypeLibraryName>
       <DllDataFileName />
@@ -178,7 +178,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <HeaderFileName>src\PatternCredProv_i.h</HeaderFileName>
       <InterfaceIdentifierFileName>PatternCredProv_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>PatternCredProv_p.c</ProxyFileName>
+      <ProxyFileName />
       <GenerateStublessProxies>true</GenerateStublessProxies>
       <TypeLibraryName>$(IntDir)PatternCredProv.tlb</TypeLibraryName>
       <DllDataFileName />
@@ -212,7 +212,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <HeaderFileName>src\PatternCredProv_i.h</HeaderFileName>
       <InterfaceIdentifierFileName>PatternCredProv_i.c</InterfaceIdentifierFileName>
-      <ProxyFileName>PatternCredProv_p.c</ProxyFileName>
+      <ProxyFileName />
       <GenerateStublessProxies>true</GenerateStublessProxies>
       <TypeLibraryName>$(IntDir)PatternCredProv.tlb</TypeLibraryName>
       <DllDataFileName />

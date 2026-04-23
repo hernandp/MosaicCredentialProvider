@@ -6,7 +6,7 @@
 
 ## Build And Environment
 - Primary development environment: Visual Studio on Windows.
-- Project file: `PatternCredProv.vcxproj`.
+- Project file: `MosaicCredProv.vcxproj`.
 - Treat this as a Windows-native codebase. Do not introduce cross-platform abstractions unless there is a concrete need.
 
 ## Editing Rules
@@ -21,7 +21,7 @@
 - Keep the root `LICENSE` file in sync with those headers.
 
 ## Generated And Interface Files
-- `PatternCredProv_i.h`, `PatternCredProv_i.c`, `PatternCredProv_p.c`, and `dlldata.c` are generated/interface artifacts but are committed in the repository.
+- `src/PatternCredProv_i.h` and `PatternCredProv_i.c` are generated/interface artifacts but are committed in the repository.
 - Do not edit generated files casually. If interface definitions change, regenerate them consistently instead of patching them by hand unless there is a specific reason.
 
 ## Credential Provider Guardrails
@@ -36,7 +36,7 @@
 - Be careful with anything that affects LogonUI rendering or secure-desktop behavior.
 
 ## Current Structure
-- `PatternCpCredentialCoClass.*`: COM credential implementation and orchestration.
+- `MosaicCpCredentialCoClass.*`: COM credential implementation and orchestration.
 - `CredentialFlow.*`: field-state and credential flow helpers.
 - `EnrollmentCrypto.*`: protected enrollment blob creation and recovery.
 - `WindowsAuth.*`: SID resolution, password validation, and credential serialization.
