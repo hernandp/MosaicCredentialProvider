@@ -1,2 +1,2 @@
-# PatternCredProvider
-Sample Credential Provider for Windows implementing figure/pattern system as credentials.
+# Mosaic Credential Provider
+Sample Credential Provider for Windows implementing a mosaic puzzle system as credentials.
