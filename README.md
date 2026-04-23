@@ -1,106 +1,177 @@
-
 <div align="center">
 <img width="243" height="238" alt="logo" src="https://github.com/user-attachments/assets/26b30031-d23e-4b86-83db-064853f15a96" />
 
 <h1>Mosaic Credential Provider</h1>
 </div>
 
-This project consists of a **Credential Provider for Windows** COM object implementing a mosaic puzzle as a login mechanism for the user, similar  to the patterns used to unlock smartphones.  
+This project implements a **Windows Credential Provider** as a COM DLL. It introduces a mosaic puzzle as an alternate sign-in mechanism, conceptually similar to the pattern-based unlock flows commonly used on smartphones.
 
-## Overview 
+The target audience is Windows developers, reverse engineers, and systems programmers interested in LogonUI integration, Credential Provider development, secure credential derivation, and authentication-related COM infrastructure.
 
-What this  Credential Provider does?
+## Overview
 
-It offers the user to enroll to the "Mosaic Credential Provider", which will allow him to use a personal Mozaic Puzzle design as an unlock credential. The Mosaic Puzzle is a 4x4 grid that can contain a blank space, a green square, a blue circle or a red cross(X) in each cell. This puzzle generates a cryptographically-generated key for which the main logon password account can be derived. Secrets are stored using the Windows DPAPI under a SYSTEM secured registry key.
+The provider allows a user to enroll in the **Mosaic Credential Provider** and use a personal mosaic puzzle as an unlock credential.
 
-The system also offers a secure mechanism to reset the mosaic pattern to a new one, if the user forgot it.
+The mosaic is a `4 x 4` grid. Each cell can contain one of four states:
 
-## Usage flows
+- blank
+- green square
+- blue circle
+- red cross
+
+During enrollment, the provider derives a cryptographic key from the user-selected mosaic pattern. That key is then used to protect data that allows the underlying Windows logon password to be recovered during authentication. Secrets are stored using Windows DPAPI in a registry location secured for SYSTEM/administrative access.
+
+The provider also supports a recovery/reset flow for users who forgot their mosaic pattern. That flow requires re-entry of the user's Windows password before a new pattern can be enrolled.
+
+## Usage Flows
 
 ### Enrollment
 
-1. When a new user is going to be enrolled, he can click the Mosaic Credential Provider icon in the Logon UI to switch to it. A message inviting the user to start the enrollment process will appear:
+1. A user who is not yet enrolled can switch to the Mosaic Credential Provider tile in LogonUI. The tile displays a message inviting the user to start enrollment.
 
    <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/40cb302c-e808-4810-8732-cb062e8adf0a" />
 
-2. Clicking the **Setup** Button will ask the user for its Windows account logon password. 
+2. Clicking **Setup** prompts the user for the current Windows account password.
 
    <img width="563" height="289" alt="image" src="https://github.com/user-attachments/assets/b8c93e63-76f5-47b0-8baf-0a4885cf4096" />
 
-3. After LSA successfully validates the password as valid, the popup dialog to enter the Mosaic pattern will appear. Here the user can click cells to "draw" its preferred pattern consisting of blank spaces, green squares, blue circles or red crosses.
+3. After the password is validated by Windows, a modal mosaic dialog is shown. The user clicks the cells to build the desired pattern using blank cells, green squares, blue circles, and red crosses.
 
    <img width="224" height="244" alt="enrollment1" src="https://github.com/user-attachments/assets/bdb6a385-4150-4b81-b05d-f227b85d82bb" />
 
-4. The Credential Provider will request the user to re-enter the  pattern in a second Mosaic dialog to confirm.
-5. When the user enters a matching pattern, the system will report the enrollment as complete:
+4. The provider then asks the user to enter the same pattern again for confirmation.
+
+5. If both entries match, enrollment completes successfully.
 
    <img width="203" height="121" alt="enrollment_complete" src="https://github.com/user-attachments/assets/a737820f-a7c3-47a6-bb0e-9f95d2e1c59e" />
 
+### Login
+
+1. When an already enrolled user selects the Mosaic Credential Provider tile, LogonUI presents the provider in login mode instead of enrollment mode.
+
+   <!-- TODO: add login tile screenshot -->
+   [Login tile image placeholder]
+
+2. The tile invites the user to continue with the mosaic credential by using the submit arrow.
+
+   <!-- TODO: add login prompt screenshot -->
+   [Login prompt image placeholder]
+
+3. Activating the submit arrow opens the mosaic dialog. The user re-enters the previously enrolled `4 x 4` mosaic pattern.
+
+   <!-- TODO: add login mosaic dialog screenshot -->
+   [Login mosaic dialog image placeholder]
+
+4. If the entered mosaic matches the enrolled pattern, the provider reconstructs the Windows credential material and returns a credential serialization to LogonUI.
+
+5. Windows then continues the normal sign-in flow using the recovered account credential.
+
+   <!-- TODO: add successful login flow screenshot -->
+   [Login success image placeholder]
+
+### Mosaic Recovery
+
+1. If an enrolled user no longer remembers the mosaic pattern, the user can select the recovery/reset option exposed by the provider tile.
+
+   <!-- TODO: add recovery entry-point screenshot -->
+   [Recovery entry-point image placeholder]
+
+2. The provider asks for the current Windows account password before allowing the mosaic to be changed.
+
+   <!-- TODO: add recovery password prompt screenshot -->
+   [Recovery password prompt image placeholder]
+
+3. After the password is validated, the provider opens the mosaic dialog and asks the user to enter a new pattern.
+
+   <!-- TODO: add recovery first-pattern screenshot -->
+   [Recovery new-pattern image placeholder]
+
+4. The provider then asks the user to enter the same new pattern again for confirmation.
+
+   <!-- TODO: add recovery confirm-pattern screenshot -->
+   [Recovery confirmation image placeholder]
+
+5. If both entries match, the old enrolled mosaic is replaced with the new one and the user can continue using the provider with the updated pattern.
+
+   <!-- TODO: add recovery completion screenshot -->
+   [Recovery completion image placeholder]
 
 ## Requirements and Installation
 
 ---
 
-:warning: **DONT** play with Credential Providers on your main Windows system, as any bug can leave your logon UI in an inoperable state, forcing you to boot into Safe Mode. 
+:warning: **Do not** experiment with Credential Providers on your main Windows installation. A bug in a provider can leave LogonUI unusable and force recovery through Safe Mode or offline remediation.
 
-If this happens, it is enough to delete the Credential Provider DLL and reboot, or wait for Winlogon to reload the Logon UI.
+If that happens, it is usually sufficient to delete or unregister the provider DLL and reboot, or wait for Winlogon to reload LogonUI.
 
 ---
 
-**VS2022 Community Edition (free)** is enough to build the Credential Provider DLL.
-Additional tools are recommended for testing and development, see below.
+**Visual Studio 2022 Community Edition** is sufficient to build the DLL.
+
+For development and testing, additional tools are strongly recommended.
 
 ### Additional Tools
 
-In particular for this project I used:
+The following tools were used during development:
 
-* VMWare / HyperV for development.
-* Remote Debugging Tools for VS2022  https://visualstudio.microsoft.com/es/downloads/
-* SysInternals DebugView https://learn.microsoft.com/en-us/sysinternals/downloads/debugview
+- VMware or Hyper-V for isolated development/testing VMs
+- Remote Debugging Tools for Visual Studio 2022  
+  https://visualstudio.microsoft.com/es/downloads/
+- Sysinternals DebugView  
+  https://learn.microsoft.com/en-us/sysinternals/downloads/debugview
 
-The debugging tools must be run with Administrator account to work as Credential Providers are instantiated under the security context of the LogonUI process.
+Debugging tools must be run with administrative privileges because Credential Providers are instantiated under the security context of `LogonUI.exe`.
 
-### Building and installing
+### Building and Installing
 
-* To build the project, open the solution on VS2022 or higher. Select your 
-desired configuration (x64/x86).
-* The output DLL will be at `build\bin\<arch>\<conf>` where `<arch>` is x86 or x64, 
-and `<conf>` either `Debug` or `Release`.  
-* Copy the binary to your target system. e.g Use good ol' `XCOPY` from the project root dir targeting your networked VM/directory:
-    ```
-    xcopy build\bin\x64\Debug\MosaicCredProv.dll \\win11vm\temp /y
-    ```
-* Go to your target VM, launch a Command Prompt with Administrative rights and run:
-    ```
-    regsvr32 /i C:\TEMP\MosaicCredProv.dll
-    ```
-  Of course, replace `TEMP` with the directory where the DLL was copied.
- 
-## After-Install registry keys 
+- Open the solution in Visual Studio 2022 or later and build the desired configuration (`x86` or `x64`).
+- The output DLL is generated under:
 
-Besides the `HKEY_CLASSES_ROOT\CLSID` entries for COM registrations, the following registry keys will be installed on your target system:
+  ```text
+  build\bin\<arch>\<config>\
+  ```
 
-| Registry key | Used for |
+  where:
+
+  - `<arch>` is `x86` or `x64`
+  - `<config>` is `Debug` or `Release`
+
+- Copy the DLL to the target machine. For example:
+
+  ```powershell
+  xcopy build\bin\x64\Debug\MosaicCredProv.dll \\win11vm\temp /y
+  ```
+
+- On the target VM, open an elevated Command Prompt and run:
+
+  ```powershell
+  regsvr32 /i C:\TEMP\MosaicCredProv.dll
+  ```
+
+  Replace `C:\TEMP` with the directory where the DLL was copied.
+
+## After-Install Registry Keys
+
+Besides the `HKEY_CLASSES_ROOT\CLSID` entries created by COM registration, the following registry keys are relevant to the provider at runtime:
+
+| Registry key | Purpose |
 |---|---|
-| `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\{30106E01-B65F-480E-993E-92D5D7310C5E}` | Registers the main Mosaic Credential Provider tile with LogonUI. The default value is `Mosaic Credential Provider`. |
-| `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\Credential Provider Filters\{5DAAB89B-38AC-437E-94F9-2379127F8564}` | Registers the optional Credential Provider Filter COM class. The default value is `Mosaic Credential Provider Filter`. |
-| `HKLM\SOFTWARE\HernanDiPietro\MosaicCredentialProvider` | Product configuration root created by `DllInstall`. Currently stores the provider-wide `Enabled` flag used by `SetUsageScenario` to decide whether the provider should participate. |
-| `HKLM\SOFTWARE\HernanDiPietro\MosaicCredentialProvider\Enrollment` | Parent container for per-user enrollment state. This key is created on demand as users enroll. |
-| `HKLM\SOFTWARE\HernanDiPietro\MosaicCredentialProvider\Enrollment\{User SID}` | Per-user enrollment record. Stores `Enabled` and the DPAPI-protected `ProtectedBlob` that ties the Windows password to the enrolled mosaic pattern. Example SID form: `S-1-5-21-...-1001`. |
+| `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\{30106E01-B65F-480E-993E-92D5D7310C5E}` | Registers the main Mosaic Credential Provider tile with LogonUI. The default value is `Mosaic Credential Provider`. |
+| `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\Credential Provider Filters\{5DAAB89B-38AC-437E-94F9-2379127F8564}` | Registers the optional Credential Provider Filter COM class. The default value is `Mosaic Credential Provider Filter`. |
+| `HKEY_LOCAL_MACHINE\SOFTWARE\HernanDiPietro\MosaicCredentialProvider` | Product configuration root created by `DllInstall`. Currently stores the provider-wide `Enabled` flag used by `SetUsageScenario` to determine whether the provider should participate. |
+| `HKEY_LOCAL_MACHINE\SOFTWARE\HernanDiPietro\MosaicCredentialProvider\Enrollment` | Parent container for per-user enrollment state. This key is created on demand as users enroll. |
+| `HKEY_LOCAL_MACHINE\SOFTWARE\HernanDiPietro\MosaicCredentialProvider\Enrollment\{User SID}` | Per-user enrollment record. Stores `Enabled` and the DPAPI-protected `ProtectedBlob` that ties the Windows password to the enrolled mosaic pattern. A typical SID looks like `S-1-5-21-...-1001`. |
 
-### CLSIDs and COM identifiers
+### CLSIDs and COM Identifiers
 
-| Symbol / class | GUID | Used for |
+| Symbol / class | GUID | Purpose |
 |---|---|---|
-| `LIBID_MosaicCredProvLib` | `5183C3D9-9A6A-4A8C-9034-FB77634C68B5` | Type library ID for the project COM metadata generated from `MosaicCredProv.idl`. |
+| `LIBID_MosaicCredProvLib` | `5183C3D9-9A6A-4A8C-9034-FB77634C68B5` | Type library ID generated from `MosaicCredProv.idl`. |
 | `CLSID_MosaicCredentialProvider` | `30106E01-B65F-480E-993E-92D5D7310C5E` | Main Credential Provider COM class exposed to LogonUI. |
-| `CLSID_MosaicCredentialProviderCredential` | `6EDDC324-1233-4597-B163-2C989210ACEB` | Credential/tile COM class created by the provider for each displayed credential. |
+| `CLSID_MosaicCredentialProviderCredential` | `6EDDC324-1233-4597-B163-2C989210ACEB` | Credential/tile COM class instantiated by the provider for each displayed credential. |
 | `CLSID_MosaicCredentialProviderFilter` | `5DAAB89B-38AC-437E-94F9-2379127F8564` | Credential Provider Filter COM class. |
 
+Running `regsvr32 /i MosaicCredProv.dll` performs two distinct tasks:
 
-Let's explain with some detail th
-
-The Credential Provider (from now CP) will 
-
-
-
+1. Standard COM registration through `DllRegisterServer`, which creates the `HKCR\CLSID` and type library entries.
+2. Product-specific installation through `DllInstall`, which creates the LogonUI registration entries and the provider configuration root under `HKLM\SOFTWARE\HernanDiPietro\MosaicCredentialProvider`.
