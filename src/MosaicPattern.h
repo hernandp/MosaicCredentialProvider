@@ -17,20 +17,15 @@
 // ----------------------------------------------------------------------------------------------------------------
 #pragma once
 
+#include <array>
 #include <cstddef>
 #include <string>
 
-constexpr int kMosaicButtonRows = 4;
-constexpr int kMosaicButtonCols = 4;
-constexpr int kMosaicButtonCount = kMosaicButtonRows * kMosaicButtonCols;
+constexpr int MOSAIC_CELL_ROWS = 4;
+constexpr int MOSAIC_CELL_COLS = 4;
+constexpr int MOSAIC_CELL_COUNT = MOSAIC_CELL_ROWS * MOSAIC_CELL_COLS;
 
-enum MosaicButtonFaceState : int
-{
-    MOSAIC_STATE_EMPTY = 0,
-    MOSAIC_BITMAP_CROSS = 1,
-    MOSAIC_BITMAP_SQUARE = 2,
-    MOSAIC_BITMAP_CIRCLE = 3,
-    MOSAIC_STATE_COUNT = 4
-};
+enum class MosaicCellGlyph { Blank, Cross, Square, Circle, GlyphCount };
 
-std::wstring BuildNormalizedPattern(const int* faceStates, size_t count);
+std::wstring BuildNormalizedPattern(const std::array<MosaicCellGlyph, MOSAIC_CELL_COUNT>& cellGlyphs);
+

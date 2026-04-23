@@ -22,16 +22,14 @@
 #include "EnrollmentStore.h"
 #include "FieldDescriptors.h"
 #include "ProductConfig.h"
-#include "VerifyDialog.h"
+#include "MosaicDialog.h"
 #include "WindowsAuth.h"
 #include "dprintf.h"
 
-#include <vector>
-
 HRESULT CMosaicCredentialProviderCredential::CaptureEnrollmentPattern(LPCWSTR pszTitle, LPCWSTR pszPrompt, std::wstring& patternOut)
 {
-    MosaicPatternResult result;
-    const HRESULT hr = OpenVerifyDialog(m_hwndParent, m_userSid.c_str(), pszTitle, pszPrompt, result);
+    MosaicDialogResult result;
+    const HRESULT hr = OpenMosaicDialog(m_hwndParent, m_userSid.c_str(), pszTitle, pszPrompt, result);
     if (SUCCEEDED(hr)) {
         patternOut = result.normalizedPattern;
     }

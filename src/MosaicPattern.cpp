@@ -18,16 +18,11 @@
 #include "pch.h"
 #include "MosaicPattern.h"
 
-std::wstring BuildNormalizedPattern(const int* faceStates, size_t count)
+std::wstring BuildNormalizedPattern(const std::array<MosaicCellGlyph, MOSAIC_CELL_COUNT>& cellGlyphs)
 {
     std::wstring pattern;
-    if (faceStates == nullptr) {
-        return pattern;
-    }
-
-    pattern.reserve(count);
-    for (size_t i = 0; i < count; ++i) {
-        pattern.push_back(static_cast<wchar_t>(L'0' + faceStates[i]));
+    for (size_t i = 0; i < cellGlyphs.size(); ++i) {
+        pattern.push_back(static_cast<wchar_t>(L'0' + (int) cellGlyphs[i]));
     }
     return pattern;
 }

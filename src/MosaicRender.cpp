@@ -18,16 +18,18 @@
 #include "pch.h"
 #include "MosaicRender.h"
 
+const int GLYPH_MARGIN = 4;
+
 namespace
 {
-    COLORREF GetGlyphColor(MosaicButtonFaceState glyphType)
+    COLORREF GetGlyphColor(MosaicCellGlyph glyphType)
     {
         switch (glyphType) {
-        case MOSAIC_BITMAP_CROSS:
+        case MosaicCellGlyph::Cross:
             return RGB(255, 0, 0);
-        case MOSAIC_BITMAP_SQUARE:
+        case MosaicCellGlyph::Square:
             return RGB(0, 160, 0);
-        case MOSAIC_BITMAP_CIRCLE:
+        case MosaicCellGlyph::Circle:
             return RGB(0, 0, 255);
         default:
             return RGB(0, 0, 0);
@@ -35,7 +37,7 @@ namespace
     }
 }
 
-HBITMAP CreateFaceBitmap(MosaicButtonFaceState glyphType, int buttonSize)
+HBITMAP CreateGlyphBitmap(MosaicCellGlyph glyphType, int buttonSize)
 {
     const int width = buttonSize - 4;
     const int height = buttonSize - 4;
@@ -68,20 +70,25 @@ HBITMAP CreateFaceBitmap(MosaicButtonFaceState glyphType, int buttonSize)
     HGDIOBJ oldPen = SelectObject(hdcMem, pen);
     HGDIOBJ oldBrush = SelectObject(hdcMem, GetStockObject(NULL_BRUSH));
 
-    const int margin = 4;
     switch (glyphType) {
-    case MOSAIC_BITMAP_CROSS:
-        MoveToEx(hdcMem, margin, margin, nullptr);
-        LineTo(hdcMem, width - margin, height - margin);
-        MoveToEx(hdcMem, width - margin, margin, nullptr);
-        LineTo(hdcMem, margin, height - margin);
+    case MosaicCellGlyph::Blank:
         break;
-    case MOSAIC_BITMAP_SQUARE:
-        Rectangle(hdcMem, margin, margin, width - margin, height - margin);
+
+    case MosaicCellGlyph::Cross:
+        MoveToEx(hdcMem, GLYPH_MARGIN, GLYPH_MARGIN, nullptr);
+        LineTo(hdcMem, width - GLYPH_MARGIN, height - GLYPH_MARGIN);
+        MoveToEx(hdcMem, width - GLYPH_MARGIN, GLYPH_MARGIN, nullptr);
+        LineTo(hdcMem, GLYPH_MARGIN, height - GLYPH_MARGIN);
         break;
-    case MOSAIC_BITMAP_CIRCLE:
-        Ellipse(hdcMem, margin, margin, width - margin, height - margin);
+
+    case MosaicCellGlyph::Square:
+        Rectangle(hdcMem, GLYPH_MARGIN, GLYPH_MARGIN, width - GLYPH_MARGIN, height - GLYPH_MARGIN);
         break;
+
+    case MosaicCellGlyph::Circle:
+        Ellipse(hdcMem, GLYPH_MARGIN, GLYPH_MARGIN, width - GLYPH_MARGIN, height - GLYPH_MARGIN);
+        break;
+
     default:
         break;
     }

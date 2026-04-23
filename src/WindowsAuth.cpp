@@ -21,7 +21,6 @@
 #include "MosaicCredProv_i.h"
 
 #include <ntsecapi.h>
-#include <vector>
 
 #pragma comment(lib, "advapi32.lib")
 #pragma comment(lib, "credui.lib")

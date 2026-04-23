@@ -43,7 +43,7 @@
 - `WindowsAuth.*`: SID resolution, password validation, and credential serialization.
 - `EnrollmentStore.*`: per-user enrollment persistence.
 - `ProviderRegistration.*`: provider registration and uninstall registry logic.
-- `VerifyDialog.*`: modal mosaic dialog plumbing.
+- `MosaicDialog.*`: modal mosaic dialog plumbing.
 - `MosaicPattern.*`: normalized mosaic model helpers.
 - `MosaicRender.*`: mosaic glyph bitmap rendering.
 

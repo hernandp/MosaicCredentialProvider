@@ -19,11 +19,11 @@
 #include <Windows.h>
 #include <string>
 
-struct MosaicPatternResult
+struct MosaicDialogResult
 {
     bool confirmed{ false };
     std::wstring normalizedPattern;
 };
 
-INT_PTR VerifyDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
-HRESULT OpenVerifyDialog(HWND hwndParent, LPCWSTR pszUserSid, LPCWSTR pszTitle, LPCWSTR pszPrompt, MosaicPatternResult& result);
+INT_PTR MosaicDialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
+HRESULT OpenMosaicDialog(HWND hwndParent, LPCWSTR pszUserSid, LPCWSTR pszTitle, LPCWSTR pszPrompt, MosaicDialogResult& result);

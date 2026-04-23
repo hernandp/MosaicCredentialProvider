@@ -19,7 +19,7 @@
 // Microsoft Visual C++ generated include file.
 // Used by MosaicCredProv.rc
 //
-#define IDD_VERIFY_DIALOG               9
+#define IDD_MOSAIC_DIALOG               9
 #define IDS_PROJNAME                    100
 #define IDR_MOSAICCREDENTIALPROVIDER   106
 #define IDR_MOSAICCPCREDENTIALCOCLASS  107

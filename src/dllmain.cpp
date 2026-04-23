@@ -18,7 +18,6 @@
 // dllmain.cpp : Implementation of DllMain.
 
 #include "pch.h"
-#include "framework.h"
 #include "resource.h"
 #include "MosaicCredProv_i.h"
 #include "dllmain.h"

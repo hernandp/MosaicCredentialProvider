@@ -32,5 +32,8 @@
 #include <atlwin.h>
 #include <bcrypt.h>
 #include <string>
+#include <array>
+#include <unordered_map>
+#include <vector>
 
 #endif //PCH_H

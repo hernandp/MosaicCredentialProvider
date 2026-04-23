@@ -21,4 +21,4 @@
 
 #include "MosaicPattern.h"
 
-HBITMAP CreateFaceBitmap(MosaicButtonFaceState glyphType, int buttonSize);
+HBITMAP CreateGlyphBitmap(MosaicCellGlyph glyphType, int buttonSize);

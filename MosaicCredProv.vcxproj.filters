@@ -79,7 +79,7 @@
     <ClInclude Include="src/FieldDescriptors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src/VerifyDialog.h">
+    <ClInclude Include="src/MosaicDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src/WindowsAuth.h">
@@ -129,7 +129,7 @@
     <ClCompile Include="src/WindowsAuth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src/VerifyDialog.cpp">
+    <ClCompile Include="src/MosaicDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

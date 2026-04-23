@@ -31,6 +31,7 @@ void SecureClearString(std::wstring& value)
     if (!value.empty()) {
         SecureZeroMemory(value.data(), value.size() * sizeof(wchar_t));
         value.clear();
+        value.shrink_to_fit();
     }
 }
 

@@ -18,7 +18,6 @@
 #include "pch.h"
 #include "EnrollmentCrypto.h"
 
-#include <vector>
 #include <wincrypt.h>
 
 #pragma comment(lib, "bcrypt.lib")

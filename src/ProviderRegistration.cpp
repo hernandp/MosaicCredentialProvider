@@ -16,7 +16,6 @@
 // SOFTWARE.
 // ----------------------------------------------------------------------------------------------------------------
 #include "pch.h"
-#include "framework.h"
 #include "MosaicCredProv_i.h"
 #include "ProductConfig.h"
 #include "dllmain.h"
