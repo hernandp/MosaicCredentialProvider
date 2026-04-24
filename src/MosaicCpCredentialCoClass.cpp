@@ -169,8 +169,8 @@ HRESULT CMosaicCredentialProviderCredential::RunEnrollmentSetup()
         CredentialProviderState::CPSTATE_ENROLLMENT_PATTERN_FIRST,
         CredentialProviderState::CPSTATE_ENROLLMENT_PATTERN_CONFIRM,
         L"Enter your Windows password to begin mosaic enrollment.",
-        L"Please enter your mosaic puzzle for enrollment.",
-        L"Please re-enter your mosaic puzzle for enrollment.",
+        L"Please enter your mosaic pattern for enrollment.",
+        L"Please re-enter your mosaic pattern for enrollment.",
         L"The two mosaic patterns do not match. Start enrollment again.",
         L"Enrollment completed successfully.");
 }
@@ -181,8 +181,8 @@ HRESULT CMosaicCredentialProviderCredential::RunResetMosaic()
         CredentialProviderState::CPSTATE_RESET_PATTERN_FIRST,
         CredentialProviderState::CPSTATE_RESET_PATTERN_CONFIRM,
         L"Enter your Windows password to reset your mosaic pattern.",
-        L"Please enter your new mosaic puzzle.",
-        L"Please re-enter your new mosaic puzzle.",
+        L"Please enter your new mosaic pattern.",
+        L"Please re-enter your new mosaic pattern.",
         L"The two mosaic patterns do not match. Start the reset again.",
         L"Your mosaic pattern was updated successfully.");
 }
@@ -283,6 +283,8 @@ HRESULT __stdcall CMosaicCredentialProviderCredential::GetStringValue(DWORD dwFi
         return SHStrDupW(L"", ppsz);
     case CP_FIELD_ENROLL_SUBMIT:
         return SHStrDupW(L"Continue", ppsz);
+    case CP_FIELD_CANCEL_CMD:
+        return SHStrDupW(L"Cancel", ppsz);
     case CP_FIELD_FORGOT_MOSAIC:
         return SHStrDupW(L"I forgot my mosaic", ppsz);
     default:
@@ -398,6 +400,31 @@ HRESULT __stdcall CMosaicCredentialProviderCredential::CommandLinkClicked(DWORD 
         return RunEnrollmentSetup();
     }
 
+    if (dwFieldID == CP_FIELD_CANCEL_CMD) {
+        SecureClearString(m_enrollmentPassword);
+        SecureClearString(m_firstEnrollmentPattern);
+
+        UserEnrollmentInfo enrollmentInfo;
+        const HRESULT hrEnrollment = GetEnrollmentInfo(m_userSid, enrollmentInfo);
+        m_cpState = HasCommittedEnrollment(hrEnrollment, enrollmentInfo)
+            ? CredentialProviderState::CPSTATE_READY_FOR_LOGIN
+            : CredentialProviderState::CPSTATE_INITIAL;
+
+        if (m_cpState == CredentialProviderState::CPSTATE_READY_FOR_LOGIN) {
+            SetReadyForLoginUIState(m_pEvents, this);
+        }
+        else if (m_pEvents != nullptr) {
+            m_pEvents->SetFieldState(this, CP_FIELD_VERIFY_CMD, CPFS_HIDDEN);
+            m_pEvents->SetFieldState(this, CP_FIELD_FORGOT_MOSAIC, CPFS_HIDDEN);
+            m_pEvents->SetFieldState(this, CP_FIELD_SETUP_CMD, CPFS_DISPLAY_IN_BOTH);
+            m_pEvents->SetFieldState(this, CP_FIELD_ENROLL_PASSWORD, CPFS_HIDDEN);
+            m_pEvents->SetFieldState(this, CP_FIELD_ENROLL_SUBMIT, CPFS_HIDDEN);
+            m_pEvents->SetFieldState(this, CP_FIELD_CANCEL_CMD, CPFS_HIDDEN);
+            m_pEvents->SetFieldString(this, CP_FIELD_EXPLAIN, GetExplainTextForState(m_cpState, false, 0));
+        }
+        return S_OK;
+    }
+
     if (dwFieldID == CP_FIELD_VERIFY_CMD) {
         return S_OK;
     }
@@ -436,7 +463,7 @@ HRESULT __stdcall CMosaicCredentialProviderCredential::GetSerialization(
 
     if (m_cpState == CredentialProviderState::CPSTATE_READY_FOR_LOGIN) {
         std::wstring normalizedPattern;
-        HRESULT hr = CaptureEnrollmentPattern(g_wszProductName, L"Please enter your mosaic puzzle to unlock.", normalizedPattern);
+        HRESULT hr = CaptureEnrollmentPattern(g_wszProductName, L"Please enter your mosaic pattern to unlock.", normalizedPattern);
         if (FAILED(hr)) {
             if (hr != HRESULT_FROM_WIN32(ERROR_CANCELLED)) {
                 MessageBoxW(m_hwndParent, L"Unable to capture the mosaic verification pattern.", g_wszProductName, MB_OK | MB_ICONERROR);

@@ -25,11 +25,12 @@
 
 namespace
 {
-    constexpr wchar_t kEnrollmentBlobMagic[] = L"MCP1";
-    constexpr wchar_t kEnrollmentBlobDescription[] = L"MosaicEnrollment";
-    constexpr DWORD kPayloadVersionPbkdf2 = 2;
-    constexpr DWORD kPbkdf2SaltLength = 32;
-    constexpr DWORD kPbkdf2Iterations = 200000;
+    constexpr wchar_t ENROLLMENT_BLOB_HEADER[] = L"MCP1";
+    constexpr wchar_t ENROLLMENT_BLOB_DESCRIPTION[] = L"MosaicEnrollment";
+    constexpr DWORD PAYLOAD_VERSION = 2;
+    constexpr DWORD PBKDF2_SALT_LENGTH = 32;
+    constexpr DWORD PBKDF2_ITERATIONS = 200000;
+    constexpr DWORD ENROLLMENT_DPAPI_FLAGS = CRYPTPROTECT_LOCAL_MACHINE;
 
     HRESULT DerivePatternKeyPbkdf2(
         const std::wstring& sid,
@@ -90,11 +91,11 @@ namespace
         cursor += sizeof(DWORD);
 
         const size_t headerSize = sizeof(DWORD) * 2;
-        if (cbMagic != sizeof(kEnrollmentBlobMagic) || payloadSize < headerSize + cbMagic + cbPassword) {
+        if (cbMagic != sizeof(ENROLLMENT_BLOB_HEADER) || payloadSize < headerSize + cbMagic + cbPassword) {
             return HRESULT_FROM_WIN32(ERROR_INVALID_DATA);
         }
 
-        if (memcmp(cursor, kEnrollmentBlobMagic, cbMagic) != 0) {
+        if (memcmp(cursor, ENROLLMENT_BLOB_HEADER, cbMagic) != 0) {
             return HRESULT_FROM_WIN32(ERROR_INVALID_PASSWORD);
         }
         cursor += cbMagic;
@@ -130,21 +131,21 @@ HRESULT CreateProtectedEnrollmentBlob(
         return E_INVALIDARG;
     }
 
-    std::vector<BYTE> salt(kPbkdf2SaltLength);
+    std::vector<BYTE> salt(PBKDF2_SALT_LENGTH);
     NTSTATUS status = BCryptGenRandom(nullptr, salt.data(), static_cast<ULONG>(salt.size()), BCRYPT_USE_SYSTEM_PREFERRED_RNG);
     if (!BCRYPT_SUCCESS(status)) {
         return HRESULT_FROM_NT(status);
     }
 
     std::vector<BYTE> patternKey(32);
-    HRESULT hr = DerivePatternKeyPbkdf2(sid, normalizedPattern, salt.data(), static_cast<DWORD>(salt.size()), kPbkdf2Iterations, patternKey);
+    HRESULT hr = DerivePatternKeyPbkdf2(sid, normalizedPattern, salt.data(), static_cast<DWORD>(salt.size()), PBKDF2_ITERATIONS, patternKey);
     if (FAILED(hr)) {
         SecureZeroMemory(salt.data(), salt.size());
         return hr;
     }
 
     const DWORD cbPassword = static_cast<DWORD>(password.size() * sizeof(wchar_t));
-    const DWORD cbMagic = sizeof(kEnrollmentBlobMagic);
+    const DWORD cbMagic = sizeof(ENROLLMENT_BLOB_HEADER);
     std::vector<BYTE> secretData(sizeof(DWORD) * 2 + cbMagic + cbPassword);
     BYTE* secretCursor = secretData.data();
 
@@ -152,7 +153,7 @@ HRESULT CreateProtectedEnrollmentBlob(
     secretCursor += sizeof(DWORD);
     memcpy(secretCursor, &cbPassword, sizeof(DWORD));
     secretCursor += sizeof(DWORD);
-    memcpy(secretCursor, kEnrollmentBlobMagic, cbMagic);
+    memcpy(secretCursor, ENROLLMENT_BLOB_HEADER, cbMagic);
     secretCursor += cbMagic;
     memcpy(secretCursor, password.data(), cbPassword);
 
@@ -161,9 +162,9 @@ HRESULT CreateProtectedEnrollmentBlob(
     const DWORD cbSecretData = static_cast<DWORD>(secretData.size());
     std::vector<BYTE> payload(sizeof(DWORD) * 4 + salt.size() + secretData.size());
     BYTE* cursor = payload.data();
-    memcpy(cursor, &kPayloadVersionPbkdf2, sizeof(DWORD));
+    memcpy(cursor, &PAYLOAD_VERSION, sizeof(DWORD));
     cursor += sizeof(DWORD);
-    memcpy(cursor, &kPbkdf2Iterations, sizeof(DWORD));
+    memcpy(cursor, &PBKDF2_ITERATIONS, sizeof(DWORD));
     cursor += sizeof(DWORD);
     const DWORD cbSalt = static_cast<DWORD>(salt.size());
     memcpy(cursor, &cbSalt, sizeof(DWORD));
@@ -179,7 +180,7 @@ HRESULT CreateProtectedEnrollmentBlob(
     plainBlob.cbData = static_cast<DWORD>(payload.size());
 
     DATA_BLOB protectedData{};
-    if (!CryptProtectData(&plainBlob, kEnrollmentBlobDescription, nullptr, nullptr, nullptr, 0, &protectedData)) {
+    if (!CryptProtectData(&plainBlob, ENROLLMENT_BLOB_DESCRIPTION, nullptr, nullptr, nullptr, ENROLLMENT_DPAPI_FLAGS, &protectedData)) {
         SecureZeroMemory(secretData.data(), secretData.size());
         SecureZeroMemory(salt.data(), salt.size());
         SecureZeroMemory(patternKey.data(), patternKey.size());
@@ -212,7 +213,7 @@ HRESULT RecoverPasswordFromProtectedBlob(
     encryptedBlob.cbData = static_cast<DWORD>(protectedBlob.size());
 
     DATA_BLOB plainBlob{};
-    if (!CryptUnprotectData(&encryptedBlob, nullptr, nullptr, nullptr, nullptr, 0, &plainBlob)) {
+    if (!CryptUnprotectData(&encryptedBlob, nullptr, nullptr, nullptr, nullptr, ENROLLMENT_DPAPI_FLAGS, &plainBlob)) {
         return HRESULT_FROM_WIN32(GetLastError());
     }
 
@@ -240,9 +241,9 @@ HRESULT RecoverPasswordFromProtectedBlob(
     cursor += sizeof(DWORD);
 
     const size_t headerSize = sizeof(DWORD) * 4;
-    if (version != kPayloadVersionPbkdf2 ||
+    if (version != PAYLOAD_VERSION ||
         iterations < 100000 ||
-        (cbSalt != 16 && cbSalt != 32) ||
+        cbSalt != PBKDF2_SALT_LENGTH ||
         cbSecretData == 0 ||
         payload.size() < headerSize + cbSalt + cbSecretData) {
         SecureZeroMemory(payload.data(), payload.size());

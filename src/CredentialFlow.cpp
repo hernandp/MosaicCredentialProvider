@@ -106,6 +106,12 @@ HRESULT InternalGetFieldState(
             *pcpfs = CPFS_DISPLAY_IN_BOTH;
         }
         return S_OK;
+    case CP_FIELD_CANCEL_CMD:
+        if (state == CredentialProviderState::CPSTATE_ENROLLMENT_PASSWORD ||
+            state == CredentialProviderState::CPSTATE_RESET_PASSWORD) {
+            *pcpfs = CPFS_DISPLAY_IN_SELECTED_TILE;
+        }
+        return S_OK;
     case CP_FIELD_ENROLL_PASSWORD:
     case CP_FIELD_ENROLL_SUBMIT:
         if (state == CredentialProviderState::CPSTATE_ENROLLMENT_PASSWORD ||
@@ -129,6 +135,7 @@ void SetEnterPasswordUIState(ICredentialProviderCredentialEvents* pEvents, ICred
     pEvents->SetFieldState(credential, CP_FIELD_SETUP_CMD, CPFS_HIDDEN);
     pEvents->SetFieldState(credential, CP_FIELD_ENROLL_PASSWORD, CPFS_DISPLAY_IN_SELECTED_TILE);
     pEvents->SetFieldState(credential, CP_FIELD_ENROLL_SUBMIT, CPFS_DISPLAY_IN_SELECTED_TILE);
+    pEvents->SetFieldState(credential, CP_FIELD_CANCEL_CMD, CPFS_DISPLAY_IN_SELECTED_TILE);
     pEvents->SetFieldString(credential, CP_FIELD_EXPLAIN, explainText);
     pEvents->SetFieldInteractiveState(credential, CP_FIELD_ENROLL_PASSWORD, CPFIS_FOCUSED);
 }
@@ -141,6 +148,7 @@ void SetReadyForLoginUIState(ICredentialProviderCredentialEvents* pEvents, ICred
 
     pEvents->SetFieldState(credential, CP_FIELD_ENROLL_PASSWORD, CPFS_HIDDEN);
     pEvents->SetFieldState(credential, CP_FIELD_ENROLL_SUBMIT, CPFS_HIDDEN);
+    pEvents->SetFieldState(credential, CP_FIELD_CANCEL_CMD, CPFS_HIDDEN);
     pEvents->SetFieldState(credential, CP_FIELD_SETUP_CMD, CPFS_HIDDEN);
     pEvents->SetFieldState(credential, CP_FIELD_VERIFY_CMD, CPFS_DISPLAY_IN_BOTH);
     pEvents->SetFieldState(credential, CP_FIELD_FORGOT_MOSAIC, CPFS_DISPLAY_IN_BOTH);
