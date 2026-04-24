@@ -53,42 +53,23 @@ The provider also supports a recovery/reset flow for users who forgot their mosa
 
 2. The tile invites the user to continue with the mosaic credential by using the submit arrow.
 
-   <!-- TODO: add login prompt screenshot -->
-   [Login prompt image placeholder]
-
 3. Activating the submit arrow opens the mosaic dialog. The user re-enters the previously enrolled `4 x 4` mosaic pattern.
-
-   <!-- TODO: add login mosaic dialog screenshot -->
-   [Login mosaic dialog image placeholder]
 
 4. If the entered mosaic matches the enrolled pattern, the provider reconstructs the Windows credential material and returns a credential serialization to LogonUI.
 
 5. Windows then continues the normal sign-in flow using the recovered account credential.
 
-   <!-- TODO: add successful login flow screenshot -->
-   [Login success image placeholder]
-
 ### Mosaic Recovery
 
 1. If an enrolled user no longer remembers the mosaic pattern, the user can select the recovery/reset option exposed by the provider tile.
 
-   <!-- TODO: add recovery entry-point screenshot -->
-   [Recovery entry-point image placeholder]
+   <img width="221" height="101" alt="image" src="https://github.com/user-attachments/assets/1ff28178-c6f3-4cef-a006-0cb04cf3dfca" />
 
 2. The provider asks for the current Windows account password before allowing the mosaic to be changed.
 
-   <!-- TODO: add recovery password prompt screenshot -->
-   [Recovery password prompt image placeholder]
-
 3. After the password is validated, the provider opens the mosaic dialog and asks the user to enter a new pattern.
 
-   <!-- TODO: add recovery first-pattern screenshot -->
-   [Recovery new-pattern image placeholder]
-
 4. The provider then asks the user to enter the same new pattern again for confirmation.
-
-   <!-- TODO: add recovery confirm-pattern screenshot -->
-   [Recovery confirmation image placeholder]
 
 5. If both entries match, the old enrolled mosaic is replaced with the new one and the user can continue using the provider with the updated pattern.
 
@@ -170,7 +151,8 @@ Besides the `HKEY_CLASSES_ROOT\CLSID` entries created by COM registration, the f
 | `CLSID_MosaicCredentialProviderCredential` | `6EDDC324-1233-4597-B163-2C989210ACEB` | Credential/tile COM class instantiated by the provider for each displayed credential. |
 | `CLSID_MosaicCredentialProviderFilter` | `5DAAB89B-38AC-437E-94F9-2379127F8564` | Credential Provider Filter COM class. |
 
-Running `regsvr32 /i MosaicCredProv.dll` performs two distinct tasks:
+## References
 
-1. Standard COM registration through `DllRegisterServer`, which creates the `HKCR\CLSID` and type library entries.
-2. Product-specific installation through `DllInstall`, which creates the LogonUI registration entries and the provider configuration root under `HKLM\SOFTWARE\HernanDiPietro\MosaicCredentialProvider`.
+* "Credential Providers in Windows" - https://learn.microsoft.com/en-us/windows/win32/secauthn/credential-providers-in-windows
+* "A primer on writing a credential provider in Windows" - https://dennisbabkin.com/blog/?t=primer-on-writing-credential-provider-in-windows
+* "Sequence of calls to a credential provider in Windows" - https://dennisbabkin.com/blog/?t=sequence-of-calls-to-credential-provider-in-windows
