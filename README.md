@@ -153,6 +153,11 @@ Besides the `HKEY_CLASSES_ROOT\CLSID` entries created by COM registration, the f
 
 ## References
 
-* "Credential Providers in Windows" - https://learn.microsoft.com/en-us/windows/win32/secauthn/credential-providers-in-windows
-* "A primer on writing a credential provider in Windows" - https://dennisbabkin.com/blog/?t=primer-on-writing-credential-provider-in-windows
-* "Sequence of calls to a credential provider in Windows" - https://dennisbabkin.com/blog/?t=sequence-of-calls-to-credential-provider-in-windows
+* Credential Providers in Windows
+  https://learn.microsoft.com/en-us/windows/win32/secauthn/credential-providers-in-windows
+
+* A primer on writing a credential provider in Windows
+  https://dennisbabkin.com/blog/?t=primer-on-writing-credential-provider-in-windows
+
+* Sequence of calls to a credential provider in Windows
+  https://dennisbabkin.com/blog/?t=sequence-of-calls-to-credential-provider-in-windows
