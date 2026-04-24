@@ -29,15 +29,15 @@ The provider also supports a recovery/reset flow for users who forgot their mosa
 
 1. A user who is not yet enrolled can switch to the Mosaic Credential Provider tile in LogonUI. The tile displays a message inviting the user to start enrollment.
 
-   <img width="40%" height="50%" alt="image" src="https://github.com/user-attachments/assets/40cb302c-e808-4810-8732-cb062e8adf0a" />
+   <img width="40%" alt="image" src="https://github.com/user-attachments/assets/40cb302c-e808-4810-8732-cb062e8adf0a" />
 
 2. Clicking **Setup** prompts the user for the current Windows account password.
 
-   <img width="563" height="289" alt="image" src="https://github.com/user-attachments/assets/b8c93e63-76f5-47b0-8baf-0a4885cf4096" />
+   <img width="40%" alt="image" src="https://github.com/user-attachments/assets/b8c93e63-76f5-47b0-8baf-0a4885cf4096" />
 
 3. After the password is validated by Windows, a modal mosaic dialog is shown. The user clicks the cells to build the desired pattern using blank cells, green squares, blue circles, and red crosses.
 
-   <img width="224" height="244" alt="enrollment1" src="https://github.com/user-attachments/assets/bdb6a385-4150-4b81-b05d-f227b85d82bb" />
+   <img  alt="enrollment1" src="https://github.com/user-attachments/assets/bdb6a385-4150-4b81-b05d-f227b85d82bb" />
 
 4. The provider then asks the user to enter the same pattern again for confirmation.
 
@@ -49,8 +49,7 @@ The provider also supports a recovery/reset flow for users who forgot their mosa
 
 1. When an already enrolled user selects the Mosaic Credential Provider tile, LogonUI presents the provider in login mode instead of enrollment mode.
 
-   <!-- TODO: add login tile screenshot -->
-   [Login tile image placeholder]
+   <img width="352" height="284" alt="image" src="https://github.com/user-attachments/assets/686bd74e-979b-4944-bfa4-7fb0e3876de9" />
 
 2. The tile invites the user to continue with the mosaic credential by using the submit arrow.
 
@@ -93,8 +92,8 @@ The provider also supports a recovery/reset flow for users who forgot their mosa
 
 5. If both entries match, the old enrolled mosaic is replaced with the new one and the user can continue using the provider with the updated pattern.
 
-   <!-- TODO: add recovery completion screenshot -->
-   [Recovery completion image placeholder]
+   <img width="342" height="164" alt="image" src="https://github.com/user-attachments/assets/fff4bb21-d487-4401-9c16-144f716a7066" />
+
 
 ## Requirements and Installation
 
